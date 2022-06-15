@@ -1,0 +1,167 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/WEB-INF/template/layout.xhtml">
+		<ui:define name="body">
+		<f:metadata>
+    		<f:viewParam name="updateKey" value="#{contractBean.updateKey}" />
+    		<f:viewAction action="#{contractBean.onload}" />
+		</f:metadata>
+		
+			<div>
+				<h:form id="frm" prependId="false">
+					<p:messages id="messages" showDetail="true" closable="true">
+						<p:autoUpdate />
+					</p:messages>
+
+					<b:container>
+						<b:row styleClass="myRow">
+
+
+							<b:column col-md="12">
+								<p:card>
+									<f:facet name="title">#{msg['app.contract.title']} </f:facet>
+									<p:tabView id="tab1" style="width:100%">
+										<p:tab title="#{msg['app.contract.client.info']}">
+										   
+										  
+											<p:outputPanel rendered="#{contractBean.model.contractStatus eq DRF}">
+											<ui:include src="contractGenernalEdit.xhtml" ></ui:include>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{contractBean.model.contractStatus ne DRF}">
+											<ui:include src="contractGenernalView.xhtml" ></ui:include>
+											</p:outputPanel>
+											
+											
+										</p:tab>
+
+										<p:tab title="#{msg['app.contract.info.fieldset']}">
+											
+											
+											<p:outputPanel rendered="#{contractBean.model.contractStatus eq DRF}"> 
+												<ui:include src="contractInfoEdit.xhtml"></ui:include>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{contractBean.model.contractStatus ne DRF}"> 
+												<ui:include src="contractInfoView.xhtml"></ui:include>
+											</p:outputPanel>
+											
+										</p:tab>
+
+										<p:tab title="#{msg['app.contract.moreInfo.fieldset']}">
+											
+											<p:outputPanel rendered="#{contractBean.model.contractStatus eq DRF}">
+											<ui:include src="contractMoreInfoEdit.xhtml"></ui:include>
+											</p:outputPanel>
+											
+											<p:outputPanel rendered="#{contractBean.model.contractStatus ne DRF}">
+											<ui:include src="contractMoreInfoView.xhtml"></ui:include>
+											</p:outputPanel>
+											
+										</p:tab>
+										
+										<p:tab title="#{msg['se.comm.contract.approve.attach.title']}">
+										
+										<p:outputPanel rendered="#{contractBean.model.contractStatus eq DRF}">
+											<ui:include src="contractAttachmentEdit.xhtml"></ui:include>
+										</p:outputPanel>
+										
+										<p:outputPanel rendered="#{contractBean.model.contractStatus ne DRF}">
+											<ui:include src="contractAttachmentView.xhtml"></ui:include>
+										</p:outputPanel>
+										
+										</p:tab>
+										
+										<p:tab title="#{msg['se.comm.contract.approve.tabl.title']}">
+										
+										<p:outputPanel rendered="#{contractBean.model.contractStatus eq PAP}">
+											<ui:include src="contractApprovalEdit.xhtml"></ui:include>
+										</p:outputPanel>
+										
+										<p:outputPanel rendered="#{contractBean.model.contractStatus ne PAP}">
+											<ui:include src="contractApprovalView.xhtml"></ui:include>
+										</p:outputPanel>
+										
+										</p:tab>
+									</p:tabView>
+
+								</p:card>
+								<p:divider></p:divider>
+								<p:card>
+									<p:panelGrid columns="4">
+												<h:panelGroup>
+												<p:commandButton
+														value="#{msg['save']}" icon="ui-icon-disk"
+														style=" font-weight:bold;font-size:13px;"
+														action="#{contractBean.save}" ajax="true"
+														update="messages"
+														rendered="#{contractBean.model.contractStatus eq DRF}"
+														>
+														<p:confirm header="Confirmation" message="#{msg['cofm']}"
+															icon="ui-icon-alert" />
+													</p:commandButton> 
+													
+													<p:confirmDialog global="true" showEffect="fade"
+														hideEffect="explode">
+														<p:commandButton value="Yes" type="button"
+															styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+														<p:commandButton value="No" type="button"
+															styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+													</p:confirmDialog>
+													
+													</h:panelGroup>
+
+												   <p:commandButton
+														icon="ui-icon-print"
+														style=" font-weight:bold;font-size:13px;" id="cmdPrint"
+														value="#{msg['print']}"
+														actionListener="#{contract.printStudProject}"
+														disabled="#{contract.printFlag}" ajax="false"
+														update="@form">
+													</p:commandButton>
+													
+												    <p:commandButton
+														style=" font-weight:bold;font-size:13px;" id="cmdClear"
+														value="#{msg['clear']}" actionListener="#{contract.clear}"
+														disabled="#{contract.printFlag}" ajax="false"
+														update="@form">
+													</p:commandButton>
+										
+										</p:panelGrid>
+								
+								</p:card>
+							</b:column>
+
+							<b:column col-md="1">
+								<p:outputPanel>
+									<p:chronoline value="#{contract.event2}" var="event"
+										layout="vertical">
+										<span style="color:#{event.statusColor};font-size: 13px;">#{event.statusName}</span>
+										<f:facet name="marker">
+											<i class="#{event.statusIcon}"
+												style="font-size: 2rem;color:#{event.statusColor}"></i>
+										</f:facet>
+									</p:chronoline>
+								</p:outputPanel>
+							</b:column>
+						</b:row>
+					</b:container>
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</body>
+
+</html>

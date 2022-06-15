@@ -1,0 +1,38 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+											<p:card>
+												<f:facet name="title">#{msg['se.comm.contract.approve.tabl.title']}</f:facet>
+												<p:panelGrid columns="2" layout="grid"
+													styleClass="showcase-text-align-center"
+													columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+													<h:outputLabel value="#{msg['se.comm.contract.approve.decission']}">
+													</h:outputLabel>
+													
+													<p:selectOneMenu value="#{contractSearchBean.criteria.contractStatus}">
+												        
+												        <f:selectItem itemLabel="#{msg['se.common.select.one']}" ></f:selectItem>
+												        <f:selectItem itemLabel="#{msg['se.comm.contract.status.app']}" itemValue="APP"></f:selectItem>
+												        <f:selectItem itemLabel="#{msg['se.comm.contract.status.rej']}" itemValue="REJ"></f:selectItem>
+												        </p:selectOneMenu>
+
+
+													<h:outputLabel value="#{msg['rep.descrip']}"></h:outputLabel>
+													<p:inputTextarea ></p:inputTextarea>
+													
+													
+
+												</p:panelGrid>
+											</p:card>
+
+										
+
+</html>

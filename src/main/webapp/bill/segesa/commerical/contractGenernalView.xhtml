@@ -1,0 +1,140 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+											<p:panelGrid columns="1" layout="grid">
+												
+												<p:card id="fillfeilds100">
+													<p:panelGrid columns="4" layout="grid" 
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+														<h:outputLabel value="#{msg['comm.customer.customerID']}"></h:outputLabel>
+														<h:outputText value="#{contractBean.model.customerDTO.customerId}"  />
+													
+													</p:panelGrid>
+													
+													<p:panelGrid columns="4" layout="grid" 
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+														
+														<h:outputLabel value="#{msg['app.name']}"></h:outputLabel>
+														<h:outputText  value="#{contractBean.model.customerDTO.customerName}"
+															></h:outputText>
+
+
+														<h:outputLabel value="#{msg['app.localID']}"></h:outputLabel>
+														
+														<h:outputText value="#{contractBean.model.customerDTO.localityDTO.description}"
+															 />
+
+														<h:outputLabel value="#{msg['app.address']}"></h:outputLabel>
+														<h:outputText  value="#{contractBean.model.customerDTO.applicationDTO.address}"
+															></h:outputText>
+
+
+														<h:outputLabel value="#{msg['comm.customer.nationality']}"></h:outputLabel>
+														<h:outputText value="#{contractBean.model.customerDTO.nationalityDTO.nationalityName}"
+															readonly="true" />
+
+														<h:outputLabel value="#{msg['comm.customer.telephone']}"></h:outputLabel>
+
+														<h:outputText value="#{contractBean.model.customerDTO.applicationDTO.telephone1}"
+															readonly="true">
+														</h:outputText>
+
+														<h:outputLabel value="#{msg['app.mobile1']}"></h:outputLabel>
+														<h:outputText value="#{contractBean.model.customerDTO.phone}" readonly="true"></h:outputText>
+													</p:panelGrid>
+												</p:card>
+												
+												<p:card>
+													<p:divider></p:divider>
+													<p:panelGrid columns="4" layout="grid"
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+														<h:outputLabel value="#{msg['app.contract.study.ID']}"></h:outputLabel>
+														<h:outputLabel value="#{contractBean.model.studyId}"
+															style="font-weight:bold;width:70%"></h:outputLabel>
+
+														<h:outputLabel value="#{msg['app.contract.insp.ID']}"></h:outputLabel>
+
+														<h:outputLabel value="#{contractBean.model.inspectorId}"
+															style="font-weight:bold"></h:outputLabel>
+
+														<h:outputLabel value="#{msg['app.contract.comment']}"></h:outputLabel>
+
+														<p:inputTextarea value="#{contractBean.model.comment}" rows="1" readonly="true"
+															style="width:100%"></p:inputTextarea>
+
+
+													</p:panelGrid>
+
+												</p:card>
+												<br />
+
+												<p:card>
+
+
+													<f:facet name="title">#{msg['app.contract.ins.fieldset']}</f:facet>
+
+													<p:panelGrid columns="4" layout="grid"
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+														<h:outputLabel value="#{msg['app.insp.phaseType']}">
+														</h:outputLabel>
+														
+														<h:outputLabel  style="width:80%"
+															value="#{contractBean.model.phaseDTO.description}" />
+
+														
+														<h:outputLabel value="#{msg['app.insp.supplyType']}"></h:outputLabel>
+
+														<h:outputLabel  
+															value="#{contractBean.model.supplyDTO.description}" />
+
+														<h:outputLabel value="#{msg['app.insp.sector']}"></h:outputLabel>
+														<h:outputLabel style="width:80%" 
+															value="#{contractBean.model.sectorDTO.description}"/>
+														
+														<h:outputLabel value="#{msg['app.insp.connectType']}"></h:outputLabel>
+														<p:selectOneRadio  value="#{contractBean.model.iguala}" disabled="true">
+												            <f:selectItem itemLabel="#{msg['se.comm.contract.iquala']}" itemValue="#{true}" />
+												            <f:selectItem itemLabel="#{msg['se.comm.contract.meter']}" itemValue="#{false}" />
+												           
+												        </p:selectOneRadio>
+														
+
+														<p:outputPanel >
+															<h:outputLabel 
+																value="#{msg['app.insp.meterNum']}"
+																rendered="#{not contractBean.model.iguala}"></h:outputLabel>
+															<h:outputLabel 
+																value="#{msg['app.contract.consumption']}"
+																rendered="#{contractBean.model.iguala}"></h:outputLabel>
+														</p:outputPanel>
+														
+														<p:outputPanel >
+															<h:outputLabel  value="#{contractBean.model.meterNumber}"
+																rendered="#{not contractBean.model.iguala}" />
+															<h:outputLabel  value="#{contractBean.model.consumption}"
+																rendered="#{contractBean.model.iguala}" />
+														</p:outputPanel>
+
+														<h:outputLabel value="#{msg['app.insp.homeCode']}"></h:outputLabel>
+														<h:outputLabel  value="#{contractBean.model.homeCode}" />
+													</p:panelGrid>
+												</p:card>
+
+
+											</p:panelGrid>
+				
+</html>

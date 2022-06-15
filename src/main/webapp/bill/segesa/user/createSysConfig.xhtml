@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:p="http://primefaces.org/ui" 
+    xmlns:b="http://bootsfaces.net/ui">
+       
+       <h:head>
+       
+       </h:head>
+<body>
+<ui:composition  template="/WEB-INF/template/layout.xhtml">
+<ui:define name="body" >
+<div>
+<h:form id="frm" prependId="false">
+  
+  <p:messages id="messages" showDetail="true" closable="true">
+            <p:autoUpdate/>
+   </p:messages>
+         
+<b:container >
+<b:row styleClass="myRow">
+<b:column col-md="12">
+<br/>
+     <p:card>
+       	<f:facet name="title">#{msg['se.sys.config.create.title']} </f:facet>
+     </p:card>
+     <p:divider></p:divider>
+     
+     <p:card>
+       	<p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center" 
+		 columnClasses="ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-8" >
+
+        <h:outputLabel id="nam" value="#{msg['se.sys.config.name']}" ></h:outputLabel>
+        <p:inputText value="#{systemConfigBean.model.configName}" id="nameconfig" ></p:inputText>
+         
+        
+        <h:outputLabel  id="bname" value="#{msg['sys.config.bundle.name']}" ></h:outputLabel>
+        <p:inputText value="#{systemConfigBean.model.bundleName}" ></p:inputText>
+        
+        <h:outputLabel id="val" value="#{msg['sys.config.value']}" ></h:outputLabel>
+        <h:selectOneMenu id="statu" value="#{systemConfigBean.model.value}"  >
+                    <f:selectItem itemLabel="#{msg['se.common.active']}" itemValue="true" noSelectionOption="true"/>
+                    <f:selectItem itemLabel="#{msg['se.common.in.active']}" itemValue="false"/>
+                  
+                </h:selectOneMenu>    
+
+              
+        </p:panelGrid>
+        
+        </p:card>
+        <p:divider></p:divider>
+         <p:card>
+        
+        <p:panelGrid layout="grid" columns="4">
+        <p:commandButton action="#{systemConfigBean.save}" value="#{msg['save']}"></p:commandButton>
+        <p:commandButton action="#{systemConfigBean.reset}" value="#{msg['cancel']}" update="frm"></p:commandButton>
+        </p:panelGrid>
+        
+ 
+       </p:card>
+        
+        
+
+   
+    </b:column>
+    </b:row>
+    </b:container>
+    
+    
+    </h:form>  
+    </div>
+</ui:define>
+</ui:composition>
+
+</body>
+	
+</html>

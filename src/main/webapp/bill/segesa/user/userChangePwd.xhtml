@@ -1,0 +1,84 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui" 
+       xmlns:b="http://bootsfaces.net/ui">
+       
+       <h:head>
+       
+       </h:head>
+<body>
+<ui:composition  template="/WEB-INF/template/layout.xhtml">
+<ui:define name="body" >
+<f:metadata>
+    <f:viewAction action="#{userBean.onload}" />
+</f:metadata>
+<div>
+<h:form id="frm" prependId="false">
+ <p:growl id="messages"  showDetail="true"/>  
+<b:container >
+<b:row styleClass="myRow">
+<b:column col-md="12">
+<br/>
+     <p:card>
+       	<f:facet name="title">#{msg['user.label.change.password']} </f:facet>
+     </p:card>
+     <p:divider></p:divider>
+     <p:card>
+       	<p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center" 
+		 columnClasses="ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-8" >
+
+        <h:outputLabel value="#{msg['user.name']}" ></h:outputLabel>
+        <p:inputText value="#{userBean.model.userName}"></p:inputText>
+        
+        
+        <h:outputLabel value="#{msg['user.code']}" ></h:outputLabel>
+        <p:inputText value="#{userBean.model.userCode}"></p:inputText>        
+        
+
+        <h:outputLabel value="#{msg['user.old.password']}" ></h:outputLabel>
+        <p:password id="old" value="#{userBean.currentPassword}">
+        <p:watermark for="old" value="Old Password" />
+        </p:password>
+        
+
+        <h:outputLabel value="#{msg['user.new.password']}" ></h:outputLabel>
+       <p:password id="new" value="#{userBean.newPassword}"><p:watermark for="new" value="New Password" /></p:password>
+
+        <h:outputLabel value="#{msg['user.confirm.password']}" ></h:outputLabel>
+        <p:password id="conf" value="#{userBean.confirmPassword}"><p:watermark for="conf" value="Confirm Password" /></p:password>
+                
+        </p:panelGrid>
+        
+        </p:card>
+        <p:divider></p:divider>
+         <p:card>
+        <f:facet name="footer">
+        <p:panelGrid layout="grid" columns="4">
+        <p:commandButton value="#{msg['update']}" action="#{userBean.changePassword}" update="frm"></p:commandButton>
+        <p:commandButton value="#{msg['cancel']}" action="#{userBean.cancel}"></p:commandButton>
+        </p:panelGrid>
+        </f:facet>
+ 
+       </p:card>
+        
+        
+
+   
+    </b:column>
+    </b:row>
+    </b:container>
+    
+    
+    </h:form>  
+    </div>
+</ui:define>
+</ui:composition>
+
+</body>
+	
+</html>

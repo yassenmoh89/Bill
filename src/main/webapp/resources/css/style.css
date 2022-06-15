@@ -1,0 +1,157 @@
+
+body .ui-selectonemenu {
+width:90%;
+}
+
+body .ui-inputfield {
+	margin: 0;
+	color: #64686A;
+	padding: 5px;
+	background: #ffffff;
+	font-size:15px;
+	font-weight: normal;
+	box-shadow: inset 0 0 0 #8f8f8f !important;
+	-webkit-box-shadow: inset 0 0 0 #8f8f8f !important;
+	width: 90%;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label.ui-inputfield.ui-corner-all {
+	text-overflow: ellipsis;
+}
+
+.ui-selectonemenu .ui-selectonemenu-label {
+	font-size:15px;
+	width: 100%;
+	border: none;
+	display: block;
+	cursor: pointer;
+	text-align:left;
+	overflow: hidden;
+	margin-bottom: 0px;
+	white-space: nowrap;
+	margin-left: 25px;
+}
+
+.ui-selectonemenu-panel .ui-selectonemenu-list-item {
+	text-align: left !important;
+	font-size:15px;
+
+}
+
+.ui-selectonemenu-list {
+	font-size:15px;
+	direction: rtl;
+	text-align: left;
+}
+
+.ui-selectonemenu label.ui-selectonemenu-label {
+    cursor: pointer;
+    color: #495057;
+}
+.ui-menu .ui-slidemenu {
+	width: 100%;
+	height: 500px;
+	background-color: white;
+	color: blue;
+}
+
+.ui-selectonemenu .ui-selectonemenu-trigger {
+    border-right: 0;
+    border-top: 0;
+    border-bottom: 0;
+    cursor: pointer;
+    width: 25px;
+    height: 100%;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 0 3px;
+}
+
+label {
+	display: inline-block;
+	max-width: 100%;
+	margin-bottom: 5px;
+	font-weight: normal;
+	font-size:15px;
+	padding-left: 6px;
+	padding-right: 6px;
+	padding-top: 6px;
+}
+
+.card {
+    border-radius: 5px;
+    background: #FDFEFF;
+    padding: 12px 16px;
+    box-sizing: border-box;
+    box-shadow: 0 2px 12px 0 rgba(0, 0, 0, 0.06);
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+    border-radius: 5px;
+    margin-bottom: 2rem;
+    color: black;
+}
+
+.ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default
+	{/*168dd9 059eff*/
+	border: 1px solid #607D8B;
+	border-radius: 4px;
+	color: #fff;;
+	background: #607D8B;
+	width: 80%;
+	font-size: 15px;
+	font-weight: bold;
+	margin-left: 8%;
+}
+
+ .ui-messages {
+  padding-left: 25%;
+  padding-right:25%;
+  padding-top:50px;
+  margin: 0;
+  font-weight: 600;
+  position: relative;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+ .ui-messages .ui-messages-error .ui-messages-error-icon, body .ui-messages .ui-messages-error .ui-messages-fatal, body .ui-messages .ui-messages-fatal .ui-messages-error-icon, body .ui-messages .ui-messages-fatal .ui-messages-fatal {
+  font-family: 'primeicons' !important;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-indent: 0 !important;
+  background-image: none !important;
+  margin: 1 2.8rem 2 2;
+  color: #B71C1C;
+}
+
+ .ui-card-header img {
+  width: 70%;
+  padding-left: 30%;
+}
+
+ .ui-card .ui-card-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  padding-left: 5px;
+  color: #93a493;
+}
+
+ .ui-panelgrid .ui-panelgrid-cell {
+  color: #919599;
+}
+
+ .ui-card {
+  background: #ffffff;
+  color: #495057;
+  box-shadow: 0 2px 1px -1px rgba(115, 100, 100, 0.7), 0 1px 1px 0 rgba(49, 44, 44, 0.7), 0 1px 3px 0 rgba(159, 152, 152, 0.67);
+  border-radius: 4px;
+}
+
+

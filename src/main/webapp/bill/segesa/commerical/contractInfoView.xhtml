@@ -1,0 +1,119 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+											<p:card styleClass="gridMinHieght">
+												<f:facet name="title">#{msg['app.contract.info.fieldset']}</f:facet>
+												<p:panelGrid columns="4" layout="grid"
+													styleClass="showcase-text-align-center"
+													columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+													<h:outputLabel value="#{msg['app.contract.budgetPaid']}">
+													</h:outputLabel>
+													<h:outputText  />
+
+
+													<h:outputLabel value="#{msg['app.contract.power']}"></h:outputLabel>
+													<h:outputText  value="#{contractBean.model.power}"></h:outputText>
+													
+													
+													<h:outputLabel value="#{msg['app.localID']}">
+													</h:outputLabel>
+													
+													<h:outputText  value="#{contractBean.model.localityDTO.description}"
+													/>
+
+
+													<h:outputLabel value="#{msg['comm.customer.telephone']}"></h:outputLabel>
+													<h:outputText  value="#{contractBean.model.telephone}">
+													</h:outputText>
+													
+													
+													
+													<h:outputLabel value="#{msg['app.contract.beneficiary']}">
+													</h:outputLabel>
+													<h:outputText  value="#{contractBean.model.beneficiary}" />
+
+													<h:outputLabel value="#{msg['app.contract.director']}"></h:outputLabel>
+
+													<h:outputText  value="#{contractBean.model.direction}" />
+
+													<h:outputLabel value="#{msg['app.contract.noCircuit']}"></h:outputLabel>
+													<h:outputText  value="#{contractBean.model.circuitoNum}" mask="999,999" />
+													<h:outputLabel value="#{msg['app.contract.type']}">
+													</h:outputLabel>
+													
+													<h:outputText  style="width:80%"
+														value="#{contractBean.model.typeDTO.description}" />
+
+													<h:outputLabel
+														value="#{msg['app.contract.typeOfContract']}"></h:outputLabel>
+													<h:outputText  style="width:80%" 
+														value="#{contractBean.model.contractTypeDTO.description}"/>
+
+													<h:outputLabel value="#{msg['app.contract.contractDate']}"></h:outputLabel>
+													<h:outputText  value="#{contractBean.model.contractDate}"/>
+												</p:panelGrid>
+												
+												<p:panelGrid columns="3" layout="grid"
+													columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-5">
+													<p:panelGrid columns="3" layout="grid">
+														
+														<h:outputLabel value="#{msg['app.contract.fixedPrice']}"></h:outputLabel>
+														<p:selectBooleanCheckbox value="#{contractBean.model.fixedPriceOp}" disabled="true">
+															
+														</p:selectBooleanCheckbox>
+														<h:outputLabel >
+															<h:outputText  value="#{contractBean.model.fixedPriceValue}"
+																style="width:80%" rendered="#{contractBean.model.fixedPriceOp}" />
+														</h:outputLabel>
+													</p:panelGrid>
+													<p:panelGrid columns="6" layout="grid">
+														<h:outputLabel value="#{msg['app.contract.digit']}"></h:outputLabel>
+														<h:outputLabel value="A"></h:outputLabel>
+														<h:outputText  value="#{contractBean.model.digitA}" style="width:80%" />
+														<h:outputLabel value="R"></h:outputLabel>
+														<h:outputText  value="#{contractBean.model.digitR}" style="width:80%" />
+													</p:panelGrid>
+													<p:panelGrid columns="6" layout="grid"
+														columnClasses="ui-g-12 ui-md-4 ui-lg-2,ui-g-12 ui-md-6 ui-lg-2,ui-g-12 ui-md-6 ui-lg-2">
+														<h:outputLabel value="#{msg['app.contract.coefficient']}"></h:outputLabel>
+														<h:outputLabel value="A"></h:outputLabel>
+														<h:outputText  value="#{contractBean.model.coefficientA}" style="width:80%" />
+														<h:outputLabel value="R"></h:outputLabel>
+														<h:outputText  value="#{contractBean.model.coefficient_R}" style="width:80%" />
+													</p:panelGrid>
+												</p:panelGrid>
+
+												<p:panelGrid columns="4" layout="grid"
+													styleClass="showcase-text-align-center"
+													columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+
+													<h:outputLabel value="#{msg['app.contract.status']}"></h:outputLabel>
+													<h:outputText  style="width:80%" 
+														value="#{contractBean.model.meterStatusDTO.description}" />
+
+													<h:outputLabel value="#{msg['app.contract.typeOfPayment']}"></h:outputLabel>
+													<h:outputText  value="#{contractBean.model.contractPaymentDTO.description}" />
+
+													<h:outputLabel value="#{msg['app.contract.payPeriod']}"></h:outputLabel>
+													<h:outputText  value="#{contractBean.model.contractBillingDTO.description}" />
+
+													<h:outputLabel value="#{msg['app.contract.alta']}"></h:outputLabel>
+													<h:outputText value="#{contractBean.model.fechaAlta}" />
+													
+
+
+												</p:panelGrid>
+											</p:card>
+
+										
+
+</html>

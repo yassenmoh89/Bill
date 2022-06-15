@@ -1,0 +1,116 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui" 
+       xmlns:b="http://bootsfaces.net/ui">
+       
+       <h:head>
+       
+       </h:head>
+<body>
+<ui:composition  template="/WEB-INF/template/layout.xhtml">
+<ui:define name="body" >
+<div>
+<h:form id="frm" prependId="false">
+ <p:growl id="messages"  />  
+<b:container >
+<b:row styleClass="myRow">
+<b:column col-md="12">
+<br/>
+     <p:card>
+       	<f:facet name="title">#{msg['user.label.search']} </f:facet>
+     </p:card>
+     <p:divider></p:divider>
+     <p:card>
+       	<p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center" 
+		 columnClasses="ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-8" >
+
+        <h:outputLabel value="#{msg['user.name']}" ></h:outputLabel>
+        <p:inputText value="#{userSearchBean.certiria.userName}"></p:inputText>
+                
+        <h:outputLabel value="#{msg['user.status']}" ></h:outputLabel>
+        <p:selectOneMenu value="#{userSearchBean.certiria.active}"  id="console"  unselectable="false">
+        	<f:selectItem itemLabel="#{msg['se.common.select.all']}" itemValue="1"/>
+            <f:selectItem itemLabel="#{msg['user.status.active']}" itemValue="true"/>
+            <f:selectItem itemLabel="#{msg['user.status.inactive']}" itemValue="false"/>
+        </p:selectOneMenu>
+        
+        <h:outputLabel value="#{msg['user.code']}" ></h:outputLabel>
+        <p:inputText value="#{userSearchBean.certiria.userCode}"></p:inputText>        
+
+ 
+        <h:outputLabel value="#{msg['user.mobile']}" ></h:outputLabel>
+        <p:inputText value="#{userSearchBean.certiria.mobile}"></p:inputText>
+
+        <h:outputLabel value="#{msg['user.email']}" ></h:outputLabel>
+        <p:inputText value="#{userSearchBean.certiria.email}" ></p:inputText>
+        
+         
+        </p:panelGrid>
+        
+      </p:card>
+        <p:divider></p:divider>
+         <p:card>
+        
+        <p:panelGrid layout="grid" columns="4" columnClasses="ui-g-6 ui-md-6 ui-lg-4, ui-g-6 ui-md-6 ui-lg-4,ui-lg-2,ui-lg-2">
+        <p:commandButton value="#{msg['search']}" action="#{userSearchBean.search}" update="frm"></p:commandButton>
+        <p:commandButton value="#{msg['cancel']}" action="#{userSearchBean.reset}" update="frm"></p:commandButton>
+        </p:panelGrid>
+       
+ 
+       </p:card>
+        <p:divider></p:divider>
+       <p:card id="tbl" rendered="#{userSearchBean.userDataModel ne null}">
+       <p:dataTable  id="tbl-data" var="usr"  rendered="#{userSearchBean.userDataModel ne null}"
+										value="#{userSearchBean.userDataModel}" 
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+										paginator="true" rows="10" styleClass="p-mt-2">
+										
+       <p:column headerText="#{msg['user.name']}" style="width:30%">
+       	<p:commandLink  action="#{userSearchBean.goToUserUpdate(usr.userId)}" ajax="false">
+			<h:outputText value="#{usr.userName}" />
+		</p:commandLink>
+       </p:column>
+             
+       <p:column headerText="#{msg['user.code']}" style="width:10%">
+        <h:outputLabel value="#{usr.userCode}"></h:outputLabel>
+       </p:column>
+       
+       <p:column headerText="#{msg['user.mobile']}">
+        <h:outputLabel value="#{usr.userProfileDTO.mobile}"></h:outputLabel>
+       </p:column>
+       
+       <p:column headerText="#{msg['user.email']}">
+       <h:outputLabel value="#{usr.userProfileDTO.email}"></h:outputLabel>
+       </p:column>
+       
+             <p:column headerText="#{msg['user.status']}" style="width:10%">
+                     <p:outputPanel rendered="#{usr.active}">
+        <i  class="pi pi-check-circle" style="font-size: 18px;color:green" ></i>
+        </p:outputPanel>
+        
+
+       </p:column>
+       
+       </p:dataTable>
+       </p:card>
+        
+
+   
+    </b:column>
+    </b:row>
+    </b:container>
+    
+    
+    </h:form>  
+    </div>
+</ui:define>
+</ui:composition>
+
+</body>
+	
+</html>

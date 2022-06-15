@@ -1,0 +1,160 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+											<p:panelGrid columns="1" layout="grid">
+												
+												<p:card id="fillfeilds1">
+													<p:panelGrid columns="4" layout="grid" 
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+														
+														<h:outputLabel value="#{msg['comm.customer.customerID']}"></h:outputLabel>
+														<p:outputLabel value="#{contractBean.model.customerDTO.customerId}" readonly="true"/>
+														
+													</p:panelGrid>
+														
+													<p:panelGrid columns="4" layout="grid" 
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+														
+														<h:outputLabel value="#{msg['app.name']}"></h:outputLabel>
+														<p:outputLabel id="app1E" value="#{contractBean.model.customerDTO.customerName}"
+															readonly="true"></p:outputLabel>
+
+
+														<h:outputLabel value="#{msg['app.localID']}"></h:outputLabel>
+														
+														<p:outputLabel value="#{contractBean.model.customerDTO.localityDTO.description}"
+															readonly="true" />
+
+														<h:outputLabel value="#{msg['app.address']}"></h:outputLabel>
+														<p:outputLabel id="app2v" value="#{contractBean.model.customerDTO.applicationDTO.address}"
+															readonly="true"></p:outputLabel>
+
+
+														<h:outputLabel value="#{msg['comm.customer.nationality']}"></h:outputLabel>
+														<p:outputLabel value="#{contractBean.model.customerDTO.nationalityDTO.nationalityName}"
+															readonly="true" />
+
+														<h:outputLabel value="#{msg['comm.customer.telephone']}"></h:outputLabel>
+
+														<p:outputLabel value="#{contractBean.model.customerDTO.applicationDTO.telephone1}"
+															readonly="true">
+														</p:outputLabel>
+
+														<h:outputLabel value="#{msg['app.mobile1']}"></h:outputLabel>
+														<p:outputLabel value="#{contractBean.model.customerDTO.phone}" readonly="true"></p:outputLabel>
+													</p:panelGrid>
+												</p:card>
+												
+												<p:card>
+													<p:divider></p:divider>
+													<p:panelGrid columns="4" layout="grid"
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+														<h:outputLabel value="#{msg['app.contract.study.ID']}"></h:outputLabel>
+														<p:inputText value="#{contractBean.model.studyId}"
+															style="font-weight:bold;width:50%"></p:inputText>
+
+														<h:outputLabel value="#{msg['app.contract.insp.ID']}"></h:outputLabel>
+
+														<p:inputText value="#{contractBean.model.inspectorId}"
+															style="font-weight:bold"></p:inputText>
+													</p:panelGrid>
+													<p:panelGrid columns="2" layout="grid"
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-4 ui-lg-2, ui-g-12 ui-md-8 ui-lg-10">
+
+														<h:outputLabel value="#{msg['app.contract.comment']}"></h:outputLabel>
+
+														<p:inputText value="#{contractBean.model.comment}" 
+															style="width:100%"></p:inputText>
+
+
+													</p:panelGrid>
+
+												</p:card>
+												<br />
+
+												<p:card>
+
+
+													<f:facet name="title">#{msg['app.contract.ins.fieldset']}</f:facet>
+
+													<p:panelGrid columns="4" layout="grid"
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+														<h:outputLabel value="#{msg['app.insp.phaseType']}">
+														</h:outputLabel>
+														<p:selectOneMenu id="app13v" style="width:80%"
+															value="#{contractBean.model.phaseDTO}" required="true"
+															converter="phaseConverter"
+															requiredMessage="#{msg['app.insp.valid.phaseType']}">
+															<f:selectItems value="#{contractBean.phaseList}" var="f"
+																itemLabel="#{f.description} "
+																itemValue="#{f}"></f:selectItems>
+
+														</p:selectOneMenu>
+
+														<h:outputLabel value="#{msg['app.insp.supplyType']}"></h:outputLabel>
+
+														<p:selectOneMenu id="app14v" style="width:80%"
+															value="#{contractBean.model.supplyDTO}" required="true"
+															converter="supplyConverter"
+															requiredMessage="#{msg['app.insp.valid.supplyType']}">
+															<f:selectItems value="#{contractBean.supplyList}" var="s"
+																itemLabel="#{s.description}"  
+																itemValue="#{s}"></f:selectItems>
+														</p:selectOneMenu>
+
+														<h:outputLabel value="#{msg['app.insp.sector']}"></h:outputLabel>
+														<p:selectOneMenu id="app15v" style="width:80%" converter="sectorConverter"
+															value="#{contractBean.model.sectorDTO}" required="true" 
+															requiredMessage="#{msg['se.valid.description']}">
+												
+															<f:selectItems value="#{contractBean.sectorList}" var="s"
+																itemLabel="#{s.description}" itemValue="#{s}"></f:selectItems>
+														</p:selectOneMenu>
+														
+														<h:outputLabel value="#{msg['app.insp.connectType']}"></h:outputLabel>
+														<p:selectOneRadio id="consolev" value="#{contractBean.model.iguala}" unselectable="false">
+												            <f:selectItem itemLabel="#{msg['se.comm.contract.iquala']}" itemValue="#{true}" />
+												            <f:selectItem itemLabel="#{msg['se.comm.contract.meter']}" itemValue="#{false}" />
+												            <p:ajax update="labv,vcontr"></p:ajax>
+												        </p:selectOneRadio>
+														
+
+														<p:outputPanel id="labv">
+															<h:outputLabel id="app165v"
+																value="#{msg['app.insp.meterNum']}"
+																rendered="#{not contractBean.model.iguala}"></h:outputLabel>
+															<h:outputLabel id="app166v"
+																value="#{msg['app.contract.consumption']}"
+																rendered="#{contractBean.model.iguala}"></h:outputLabel>
+														</p:outputPanel>
+														
+														<p:outputPanel id="vcontr">
+															<p:inputText id="app17v" value="#{contractBean.model.meterNumber}"
+																rendered="#{not contractBean.model.iguala}" />
+															<p:inputText id="app175v" value="#{contractBean.model.consumption}"
+																rendered="#{contractBean.model.iguala}" />
+														</p:outputPanel>
+
+														<h:outputLabel value="#{msg['app.insp.homeCode']}"></h:outputLabel>
+														<p:inputText id="app18v" value="#{contractBean.model.homeCode}" />
+													</p:panelGrid>
+												</p:card>
+
+
+											</p:panelGrid>
+				
+</html>

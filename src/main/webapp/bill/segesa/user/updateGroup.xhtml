@@ -1,0 +1,214 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+
+</h:head>
+<body>
+	<ui:composition template="/WEB-INF/template/layout.xhtml">
+		<ui:define name="body">
+		
+		<f:metadata>
+    		<f:viewParam name="updateKey" value="#{groupUpdateBean.updateKey}" />
+    		<f:viewAction action="#{groupUpdateBean.onload}" />
+		</f:metadata>
+			<div>
+				<h:form id="frm" prependId="false">
+					<p:messages id="messages" showDetail="true" closable="true">
+           					 <p:autoUpdate/>
+   							</p:messages>
+					<b:container>
+						<b:row styleClass="myRow">
+							<b:column col-md="12">
+								<br />
+								<p:card>
+									<f:facet name="title">#{msg['group.update.title']} </f:facet>
+								</p:card>
+								<p:divider></p:divider>
+								<p:card>
+									<p:panelGrid columns="4" layout="grid"
+										styleClass="showcase-text-align-center"
+										columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4,ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+										<h:outputLabel value="#{msg['group.name']}"></h:outputLabel>
+										<p:inputText value="#{groupUpdateBean.model.groupName}"></p:inputText>
+
+										<h:outputLabel value="#{msg['group.code']}"></h:outputLabel>
+										<p:inputText value="#{groupUpdateBean.model.groupCode}"></p:inputText>
+
+										<h:outputLabel value="#{msg['description']}"></h:outputLabel>
+										<p:inputTextarea value="#{groupUpdateBean.model.comment}"></p:inputTextarea>
+
+										<h:outputLabel value="#{msg['user.status']}"></h:outputLabel>
+										<p:selectOneRadio id="console"
+											value="#{groupUpdateBean.model.status}" >
+											<f:selectItem itemLabel="#{msg['user.status.active']}"
+												itemValue="ACT" />
+											<f:selectItem itemLabel="#{msg['user.status.inactive']}"
+												itemValue="INACT" />
+										</p:selectOneRadio>
+
+
+									</p:panelGrid>
+
+								</p:card>
+								<p:divider></p:divider>
+								
+								
+								<p:divider></p:divider>
+								<p:card>
+									
+								<p:tabView id="tab1">
+									<p:tab title="#{msg['permission']}">
+									
+
+									<p:dataTable value="#{groupUpdateBean.groupResourceDTOs}" var="gr" id="resdtl"
+									rendered="#{groupUpdateBean.groupResourceDTOs ne null}"
+									>
+									
+                                       <f:facet name="footer">
+                                           <p:commandButton value="#{msg['add']}" icon="pi pi-plus" 
+                                 		update=":frm:tab1:resdtl" oncomplete="PF('manageProductDialog').show()"
+                                 			styleClass="ui-button-success" style="margin-right: .5rem">
+                    						<p:resetInput target=":frm:resPancle"/>
+                					</p:commandButton>
+                                       </f:facet>
+                                       
+										<p:column headerText="#{msg['role.resource.name']}">
+										<p:commandLink update=":frm:reseDialogPancle" oncomplete="PF('resourceDialog').show()"
+                                 			styleClass="ui-button-success" style="margin-right: .5rem" actionListener="#{groupUpdateBean.showResourse(gr)}"
+                                 >
+                    						<p:resetInput target=":frm:reseDialogPancle"/>
+                    						
+											<h:outputText value="#{gr.resourceDTO.resourceName}"></h:outputText>
+											</p:commandLink>
+										</p:column>
+
+										<p:column headerText="#{msg['role.resource.name']}">
+											<h:outputText value="#{gr.resourceDTO.bundle}"></h:outputText>
+										</p:column>
+
+										<p:column headerText="#{msg['user.status']}">
+											
+											        <p:outputPanel rendered="#{gr.resourceDTO.status eq 'ACT'}">
+											        <i  class="pi pi-check-circle" style="font-size: 18px;color:green" ></i>
+											        </p:outputPanel>
+											        
+											        <p:outputPanel rendered="#{gr.resourceDTO.status ne 'ACT'}">
+											        <i  class="pi pi-minus-circle" style="font-size: 18px;color:orange;" ></i>
+											        </p:outputPanel>
+										</p:column>
+										
+										<p:column headerText="#{msg['se.common.remove']}">
+											<p:commandLink value="#{msg['se.common.remove']}" actionListener="#{groupUpdateBean.removeResource(gr)}"
+											update="resdtl"></p:commandLink>
+										</p:column>
+
+									</p:dataTable>
+									
+									</p:tab>
+									<p:tab title="#{msg['members']}">
+									<ui:insert><ui:include src="/bill/segesa/user/members.xhtml" /></ui:insert>
+									</p:tab>
+									</p:tabView>
+								</p:card>
+
+								<p:divider></p:divider>
+								<p:card >
+									
+										<p:panelGrid layout="grid" columns="4" styleClass="bakground">
+											<p:commandButton value="#{msg['save']}" action="#{groupUpdateBean.update}" update=":frm:messages"></p:commandButton>
+											<p:commandButton value="#{msg['cancel']}" action="#{groupUpdateBean.cancel}" update="frm"></p:commandButton>
+										</p:panelGrid>
+								
+
+								</p:card>
+								
+								<p:dialog header="#{msg['group.add.resource']}" showEffect="fade"  width="80%"
+                  						widgetVar="manageProductDialog" resizable="true">
+                					<p:card>
+									<p:outputPanel id="resPancle" class="ui-fluid">
+
+										<p:panelGrid columns="2" layout="grid">
+
+											<h:outputLabel id="resLabel" value="#{msg['role.resource.name']}"></h:outputLabel>
+											<p:selectOneMenu id="resValue" value="#{groupUpdateBean.resourceID}" filter="true" >
+												<f:selectItem itemLabel="#{msg['se.common.select.one']}"></f:selectItem>
+												<f:selectItems value="#{groupUpdateBean.resourceList}" var="r"
+													itemLabel="#{msg[r.bundle]}" itemValue="#{r.roleResourceId}" ></f:selectItems>
+													
+											</p:selectOneMenu>
+											 <p:message for="resValue" />
+										</p:panelGrid>
+
+										<p:divider></p:divider>
+
+										<p:panelGrid columns="1" layout="grid">
+										
+										<h5 style="margin-top: 0"> #{msg['role.add']} </h5>
+        										<p:pickList id="pickListRes" value="#{groupUpdateBean.roles}" 
+        										var="role" itemLabel="#{role.roleName}" itemValue="#{role}" 
+                    							showCheckbox="true"
+                    							converter="roleConverter" responsive="true"></p:pickList>
+
+										</p:panelGrid>
+										<p:panelGrid columns="2" layout="grid">
+										<p:commandButton action="#{groupUpdateBean.addResource}"
+										value="#{msg['add']}" update=":frm:tab1:resdtl,:tab1:resdtl,:frm:pickListRes:" ></p:commandButton>
+										</p:panelGrid>
+									</p:outputPanel>
+									</p:card>
+								</p:dialog>
+								
+								<p:dialog header="#{msg['group.add.resource']}" showEffect="fade"  width="80%"
+                  						widgetVar="resourceDialog" resizable="true" >
+                					<p:card>
+									<p:outputPanel id="reseDialogPancle" class="ui-fluid">
+
+										<p:panelGrid columns="2" layout="grid">
+											<h:outputLabel id="resLabel1" value="#{msg['role.resource.name']}"></h:outputLabel>
+											<h:outputText value="#{groupUpdateBean.groupResourseName}"></h:outputText>
+										</p:panelGrid>
+
+										<p:divider></p:divider>
+
+										<p:panelGrid columns="1" layout="grid">
+										
+										<h5 style="margin-top: 0">"#{msg['role.add']} </h5>
+        										<p:pickList id="pickListRes1" value="#{groupUpdateBean.updateRole}" 
+        										var="role" itemLabel="#{role.roleName}" itemValue="#{role}" 
+                    							showCheckbox="true"
+                    							converter="roleConverter" responsive="true"></p:pickList>
+
+										</p:panelGrid>
+										<p:panelGrid columns="2" layout="grid">
+										<p:commandButton action="#{groupUpdateBean.updateResource}"
+										value="#{msg['update']}" update=":frm:tab1:resdtl" oncomplete="PF('resourceDialog').hide()"></p:commandButton>
+										
+										<p:commandButton oncomplete="PF('resourceDialog').hide()"
+										value="#{msg['cancel']}" update=":frm:tab1:resdtl" ></p:commandButton>
+										</p:panelGrid>
+									</p:outputPanel>
+									</p:card>
+								</p:dialog>
+							</b:column>
+						</b:row>
+					</b:container>
+
+						
+
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</body>
+
+</html>

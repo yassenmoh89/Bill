@@ -1,0 +1,66 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+											<p:panelGrid columns="1" layout="grid" styleClass="gridMinHieght" rendered="#{ccontractBean.uploadFileList ne null}">
+												<p:dataTable value="#{ccontractBean.uploadFileList}" var="file"
+													rowIndexVar="row" id="docList1x" reflow="true" >
+
+													<p:column style="width:5%">
+														<f:facet name="header">
+															<p:selectBooleanCheckbox />
+														</f:facet>
+
+														<p:selectBooleanCheckbox value="#{file.selected}" />
+													</p:column>
+
+													<p:column headerText="#{msg['se.upload.id']}" style="width:10%">
+														<h:outputLabel value="#{row + 1}" />
+													</p:column>
+													<p:column headerText="#{msg['se.upload.file.name']}" style="width:40%">
+													  <p:commandLink oncomplete="PF('showDocumentDialog').show()"
+													   actionListener="#{contractBean.setDocumetShow(file.upoladFileId)}" update="showDoc">
+														<h:outputLabel value="#{file.fileName}">
+														</h:outputLabel>
+														</p:commandLink>
+													</p:column>
+
+													<p:column headerText="#{msg['se.upload.file.date']}" >
+														<h:outputLabel value="#{file.createdDate}">
+															<f:convertDateTime pattern="dd/MM/yyyyy"></f:convertDateTime>
+														</h:outputLabel>
+													</p:column>
+
+													<p:column headerText="#{msg['se.upload.file.size']}" >
+														<h:outputLabel value="#{file.size} KB">
+														</h:outputLabel>
+													</p:column>
+												</p:dataTable>
+												
+												<p:panelGrid columns="4">
+												<p:commandButton value="#{msg['upload']}"
+														chooseIcon="pi pi-upload"
+														onclick="PF('udlgUpload').show()"
+														update=":frm:messages:,docList1x"
+														styleClass="ui-button-flat ui-button-plain"
+														style="background: #f1ece6;border-color: #f1ece6;">
+													</p:commandButton>
+													<p:commandButton action="#{contractBean.downloadDocument}"
+														icon="pi pi-download" value="#{msg['download']}"
+														id="btnDold1X" ajax="false"
+														styleClass="ui-button-flat ui-button-plain"
+														style="background: #f1ece6;border-color: #f1ece6;" 
+														/>
+												</p:panelGrid>
+
+
+											</p:panelGrid>
+										
+
+</html>

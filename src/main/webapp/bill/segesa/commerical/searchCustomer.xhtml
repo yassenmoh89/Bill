@@ -1,0 +1,166 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui" 
+       xmlns:b="http://bootsfaces.net/ui">
+       
+       <h:head>
+       
+       </h:head>
+<h:body>
+<ui:composition  template="/WEB-INF/template/layout.xhtml">
+<ui:define name="body" >
+<div>
+<h:form id="frm" prependId="false">
+ <p:messages id="messages" showDetail="true" closable="true">
+           					 
+   							</p:messages>
+<b:container >
+<b:row styleClass="myRow">
+<b:column col-md="12">
+<p:card>
+	<f:facet name="title">#{msg['menu.commerical.searchByName']} </f:facet>
+</p:card>
+<p:divider></p:divider>
+     <p:card>   
+     <p:panelGrid layout="grid" columns="4" columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+        <h:outputLabel value="#{msg['app.name']}"  ></h:outputLabel>
+
+        <p:inputText value="#{customerSearchBean.criteria.customerName}"></p:inputText> 
+        
+         <h:outputLabel value="#{msg['comm.customer.customerID']}" ></h:outputLabel>
+
+        <p:inputText id="cID" style="font-wieght:blod;" value="#{customerSearchBean.criteria.customerId}"> </p:inputText>
+        
+        <h:outputLabel value="#{msg['app.localID']}" ></h:outputLabel>
+        
+        <p:selectOneMenu value="#{customerSearchBean.criteria.localityId}">
+        <f:selectItem itemLabel="#{msg['se.common.select.all']}"></f:selectItem> 
+        <f:selectItems value="#{customerSearchBean.localityList}" var="l" itemLabel="#{l.description}" itemValue="#{l.localityId}"></f:selectItems>
+        </p:selectOneMenu>
+        
+        <h:outputLabel value="#{msg['comm.customer.telephone']}" ></h:outputLabel>
+
+        <p:inputText value="#{customerSearchBean.criteria.phone}" ></p:inputText>
+        
+        <h:outputLabel value="#{msg['comm.customer.client.code']}" ></h:outputLabel>
+        <p:inputText value="#{customerSearchBean.criteria.customerCode}"></p:inputText>
+        
+        <h:outputLabel value="#{msg['app.address']}" ></h:outputLabel>
+        <p:inputText value="#{customerSearchBean.criteria.direction}"></p:inputText>
+       	
+       	
+       	<h:outputLabel value="#{msg['created.date.from']}" ></h:outputLabel>
+        <p:datePicker value="#{customerSearchBean.criteria.createdFrom}"></p:datePicker>
+        
+        <h:outputLabel value="#{msg['created.date.to']}" ></h:outputLabel>
+         <p:datePicker value="#{customerSearchBean.criteria.createdTo}"></p:datePicker>
+        
+        </p:panelGrid>
+     </p:card> 
+     <br/>
+     <p:card>
+     <p:panelGrid layout="grid" columns="4" columnClasses="ui-g-6 ui-md-6 ui-lg-4, ui-g-6 ui-md-6 ui-lg-4,ui-lg-2,ui-lg-2">
+     <p:commandButton value="#{msg['search']}"  action="#{customerSearchBean.search}" update="custDList"></p:commandButton>
+	
+	<p:commandButton value="#{msg['cancel']}" action="#{customerSearchBean.reset}" update="frm"></p:commandButton>
+	
+	</p:panelGrid>
+     </p:card> 
+	
+	<p:divider></p:divider>
+	
+	<p:card>
+	<p:dataTable  paginator="true" rows="10" var="cus" id="custDList" 
+									rowsPerPageTemplate="5,10,15" 
+										value="#{customerSearchBean.customerLazyDataModel}" 
+										 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+										 styleClass="p-mt-2">
+	
+	<p:column headerText="#{msg['comm.customer.customerID']}">
+	<p:commandLink actionListener="#{customerSearchBean.getCustomerInfo(cus.customerId)}"  onclick="PF('invDialog').show()" ajax="true" update="nam">
+	<h:outputLabel value="#{cus.customerId}"/>
+	  </p:commandLink>
+	</p:column>
+
+	<p:column headerText="#{msg['app.name']}" >
+	<h:outputLabel value="#{cus.customerName}" id="dynaButton"  onclick="PF('ta').show"/>
+	</p:column>
+	
+	
+	<p:column headerText="#{msg['comm.customer.telephone']}">
+	<h:outputLabel value="#{cus.phone}" />
+	</p:column>
+	
+	
+	<p:column headerText="#{msg['app.address']}">
+	<h:outputLabel value="#{cus.calle}" />
+	</p:column>
+	</p:dataTable>
+    
+  </p:card>
+  
+  
+  						<p:dialog id="dl" header="#{msg['app.fieldset.clientInformation']} " showEffect="fade"  width="80%" widgetVar="invDialog" resizable="true">
+							<p:divider></p:divider>
+								<p:card>
+									<p:outputPanel id="nam">
+
+										<p:panelGrid columns="4" layout="grid" id="buton1" columnClasses="ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-8 ui-lg-4,ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-8 ui-lg-4">
+  										<h:outputLabel value="#{msg['app.name']}"></h:outputLabel>	
+  										<h:outputLabel  value="#{customerSearchBean.customerDTO.customerName}"></h:outputLabel>
+  										
+  										<h:outputLabel value="#{msg['app.address']}"></h:outputLabel>
+
+										<h:outputLabel
+											value="#{customerSearchBean.customerDTO.applicationDTO.address}"></h:outputLabel>
+										
+										<h:outputLabel value="#{msg['comm.customer.telephone']}"></h:outputLabel>	
+  										<h:outputLabel
+											value="#{customerSearchBean.customerDTO.phone}"></h:outputLabel>
+											
+									<h:outputLabel value="#{msg['app.mobile1']}"></h:outputLabel>
+									<h:outputLabel value="#{customerSearchBean.customerDTO.applicationDTO.mobile1}"></h:outputLabel>
+											
+									<h:outputLabel value="#{msg['comm.customer.nationality']}"></h:outputLabel>
+									<h:outputLabel value="#{customerUpdateBean.model.nationalityDTO.nationalityName}"></h:outputLabel>
+								
+								
+  					</p:panelGrid>
+  					</p:outputPanel>
+
+  					</p:card>
+  					
+  						<p:divider></p:divider>
+  					
+  					<p:card>
+	  					<f:facet name="footer">
+		  					<p:panelGrid columns="6" layout="grid">
+		  					     <p:commandButton value="#{msg['customer.search.btn.show.customer.info']}"  action="#{customerSearchBean.goToCustomerUpdate}" update="custDList" styleClass="ui-button-outlined ui-button-secondary"></p:commandButton>
+			
+								<p:commandButton value="#{msg['contract.search.btn.new.contract']}" action="#{customerSearchBean.goToCreateNewContract}" update="frm" styleClass="ui-button-outlined ui-button-secondary"></p:commandButton>
+
+								<p:commandButton value="#{msg['customer.search.btn.otherPayment']}" action="#{customerSearchBean.goToOtherPayment}" update="frm" styleClass="ui-button-outlined ui-button-secondary"></p:commandButton>
+
+		  					</p:panelGrid>
+	  					</f:facet>
+  					</p:card>
+  					</p:dialog>
+
+  </b:column>
+  </b:row>
+  </b:container>
+  
+    
+    </h:form>  
+    </div>
+</ui:define>
+</ui:composition>
+
+</h:body>
+	
+</html>

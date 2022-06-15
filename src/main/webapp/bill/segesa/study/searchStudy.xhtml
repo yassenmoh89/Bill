@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui" 
+       xmlns:b="http://bootsfaces.net/ui">
+       
+       <h:head>
+       
+       </h:head>
+<h:body>
+<ui:composition  template="/WEB-INF/template/layout.xhtml">
+<ui:define name="body" >
+<div>
+<h:form id="frm" prependId="false">
+ <p:messages id="messages" showDetail="true" closable="true">
+           					 
+   							</p:messages>
+<b:container >
+<b:row styleClass="myRow">
+<b:column col-md="12">
+<p:card>
+	<f:facet name="title">#{msg['study.search']} </f:facet>
+</p:card>
+<p:divider></p:divider>
+<p:card>
+	<p:panelGrid layout="grid" columns="4">
+         <h:outputLabel value="#{msg['comm.customer.customerID']}" ></h:outputLabel>
+        <p:inputText id="cID" style="font-wieght:blod;" value="#{studySearch.criteria.customerId}"> </p:inputText>
+        
+        <h:outputLabel value="#{msg['created.date.from']}" ></h:outputLabel>
+        <p:calendar value="#{studySearch.criteria.fromDate}"></p:calendar>
+        </p:panelGrid>
+        <f:facet name="footer">
+        <p:commandButton value="#{msg['search']}"  action="#{studySearch.search}" update="custDList,inf"></p:commandButton>
+        </f:facet>
+</p:card>
+<p:divider></p:divider>
+<p:card>   
+     <p:panelGrid id="inf" layout="grid" columns="4" columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+      
+        <h:outputLabel value="#{msg['app.name']}"  ></h:outputLabel>
+        <p:inputText value="#{studySearch.customerDTO.customerName}"></p:inputText> 
+        
+         <h:outputLabel value="#{msg['comm.customer.telephone']}" ></h:outputLabel>
+        <p:inputText value="#{studySearch.customerDTO.phone}" ></p:inputText>
+        
+        <h:outputLabel value="#{msg['app.address']}" ></h:outputLabel>
+        <p:inputText value="#{studySearch.customerDTO.calle}"></p:inputText>
+       	
+       	
+       	<h:outputLabel value="#{msg['created.date.from']}" ></h:outputLabel>
+        <p:datePicker value="#{customerSearchBean.criteria.createdFrom}"></p:datePicker>
+        
+        <h:outputLabel value="#{msg['created.date.to']}" ></h:outputLabel>
+         <p:datePicker value="#{customerSearchBean.criteria.createdTo}"></p:datePicker>
+        
+        </p:panelGrid>
+     </p:card> 
+     	
+	<p:divider></p:divider>
+	
+	<p:card>
+	<p:dataTable  paginator="true" rows="10" var="cus" id="custDList" 
+									rowsPerPageTemplate="5,10,15" 
+										value="#{studySearch.studyAppLazyDataModel}" 
+										 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+										 styleClass="p-mt-2">
+										 
+	<p:column headerText="#{msg['app.contract.study.ID']}" style="width:10%">
+	<p:commandLink action="#{studySearch.goToStudyAppUpdate(cus.studyId)}" ajax="false">
+	<h:outputLabel value="#{cus.studyId}" />
+	</p:commandLink>
+	</p:column>
+	
+	<p:column headerText="#{msg['comm.customer.customerID']}" style="width:10%">
+	<h:outputLabel value="#{cus.customerDTO.customerId}" />
+	</p:column>
+	
+	<p:column headerText="#{msg['inventory.openBalance.item.total']}">
+	<h:outputLabel value="#{cus.itemsTotal}" >
+	<f:convertNumber maxFractionDigits="2"></f:convertNumber>
+	</h:outputLabel>
+	</p:column>
+	
+	<p:column headerText="#{msg['app.study.totalPagarInFCFAS']}" >
+	<h:outputLabel value="#{cus.finalTotal}">
+	<f:convertNumber maxFractionDigits="2"></f:convertNumber>
+	</h:outputLabel>
+	</p:column>
+	
+		<p:column headerText="#{msg['app.study.date']}">
+	<h:outputLabel value="#{cus.studyDate}" />
+	</p:column>
+
+	</p:dataTable>
+    
+  </p:card>
+  </b:column>
+  </b:row>
+  </b:container>
+  
+    
+    </h:form>  
+    </div>
+</ui:define>
+</ui:composition>
+
+</h:body>
+	
+</html>

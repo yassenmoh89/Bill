@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/WEB-INF/template/layout.xhtml">
+		<ui:define name="body">
+		<f:metadata>
+    		<f:viewParam name="updateKey" value="#{customerUpdateBean.updateKey}" />
+    		<f:viewAction action="#{customerUpdateBean.onload}" />
+		</f:metadata>
+			<div>
+				<h:form id="frm" prependId="false">
+					<p:messages id="messages" showDetail="true" closable="true">
+						<p:autoUpdate />
+					</p:messages>
+					<b:container style="width:80%">
+						<b:row styleClass="myRow">
+							<b:column col-md="12">
+								<br />
+
+
+								<p:card>
+									<f:facet name="title">#{msg['app.newApplication.title']} </f:facet>
+									<p:panelGrid columns="4" layout="grid"
+										styleClass="showcase-text-align-center"
+										columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+										<h:outputLabel value="#{msg['app.purpose']}"></h:outputLabel>
+
+										<p:selectOneMenu
+											value="#{customerUpdateBean.model.applicationDTO.applicationPurposeTypeDTO}"
+													style="width:100%"  converter="applicationPurposeTypeConverter">
+											<f:selectItems value="#{customerUpdateBean.appPurposeList}" var="o"
+												itemValue="#{o}" itemLabel="#{o.applicationPurposeType} "></f:selectItems>
+
+										</p:selectOneMenu>
+
+										<h:outputLabel value="#{msg['app.localID']}"></h:outputLabel>
+
+										<p:selectOneMenu value="#{customerUpdateBean.model.localityDTO}"
+													filter="true" filterMatchMode="startsWith"  converter="localityConverter">
+											
+											<f:selectItems value="#{customerUpdateBean.localityList}" var="o"
+												itemValue="#{o}" itemLabel="#{o.description} "></f:selectItems>
+
+										</p:selectOneMenu>
+									</p:panelGrid>
+
+									<p:panelGrid columns="2" layout="grid"
+										columnClasses="ui-g-12 ui-md-4 ui-lg-2, ui-g-12 ui-md-8 ui-lg-8">
+										<h:outputLabel value="#{msg['app.fieldset.typeContract']}"></h:outputLabel>
+
+										<p:selectOneRadio id="options"
+											value="#{customerUpdateBean.contractType}">
+											<f:selectItem itemLabel="#{msg['app.personal']}"
+												itemValue="1" />
+											<f:selectItem itemLabel="#{msg['app.official']}"
+												itemValue="2" />
+											<f:selectItem itemLabel="#{msg['app.society']}" itemValue="3" />
+										</p:selectOneRadio>
+									</p:panelGrid>
+								</p:card>
+								<p:divider></p:divider>
+								<p:card>
+									<p:panelGrid columns="4" layout="grid"
+										styleClass="showcase-text-align-center"
+										columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+										<h:outputLabel value="#{msg['app.name']}"></h:outputLabel>
+
+										<p:inputText id="nam"
+											value="#{customerUpdateBean.model.customerName}" required="true"
+															requiredMessage="#{msg['app.customerName.valid']}">
+										</p:inputText>
+
+										<h:outputLabel value="#{msg['comm.customer.nationality']}"></h:outputLabel>
+
+										<p:selectOneMenu value="#{customerUpdateBean.model.nationalityDTO}"
+											 converter="nationalityConverter" filter="true" filterMatchMode="startsWith" style="width:100%">
+													
+											<f:selectItems value="#{customerUpdateBean.nationalityList}"
+												var="o" itemValue="#{o}" itemLabel="#{o.nationalityName} "></f:selectItems>
+										</p:selectOneMenu>
+
+										<h:outputLabel
+											value="#{msg['comm.customer.identitification']}"></h:outputLabel>
+
+										<p:selectOneMenu value="#{customerUpdateBean.model.identificationTypeDTO}"
+											converter="identificationTypeConverter">
+											
+											<f:selectItems value="#{customerUpdateBean.identificationList}"
+												var="o" itemValue="#{o}"
+												itemLabel="#{o.identificationType} "></f:selectItems>
+										</p:selectOneMenu>
+
+										<h:outputLabel
+											value="#{msg['comm.customer.identificationID']}"></h:outputLabel>
+
+										<p:inputText value="#{customerUpdateBean.model.identification}"
+											required="true"
+											requiredMessage="#{msg['comm.customer.identificationID.valid']}">
+
+										</p:inputText>
+
+
+										<h:outputLabel value="#{msg['app.address']}"></h:outputLabel>
+
+										<p:inputText
+											value="#{customerUpdateBean.model.applicationDTO.address}"
+											required="true" requiredMessage="#{msg['app.address.valid']}"></p:inputText>
+
+										<h:outputLabel value="#{msg['app.neighbor']}"></h:outputLabel>
+
+										<p:inputText
+											value="#{customerUpdateBean.model.applicationDTO.neighbors}"></p:inputText>
+
+										<h:outputLabel value="#{msg['comm.customer.telephone']}"></h:outputLabel>
+
+										<p:inputText value="#{customerUpdateBean.model.phone}">
+										</p:inputText>
+
+
+										<h:outputLabel value="#{msg['app.mobile1']}"></h:outputLabel>
+
+										<p:inputText
+											value="#{customerUpdateBean.model.applicationDTO.mobile1}"></p:inputText>
+
+										<h:outputLabel value="#{msg['app.accommodation.type']}"></h:outputLabel>
+
+										<p:selectOneMenu value="#{customerUpdateBean.model.applicationDTO.householdsDTO}"
+											style="width:215px;" converter="householdsConverter">
+											
+											<f:selectItems value="#{customerUpdateBean.householdsList}" var="o"
+												itemValue="#{o}" itemLabel="#{o.description} "></f:selectItems>
+										</p:selectOneMenu>
+
+
+									</p:panelGrid>
+								</p:card>
+								<p:divider></p:divider>
+								<p:card>
+
+									<f:facet name="title">#{msg['app.fieldset.ownerInformation']}</f:facet>
+									<p:panelGrid columns="4" layout="grid"
+										styleClass="showcase-text-align-center"
+										columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+										<h:outputLabel value="#{msg['app.name']}"></h:outputLabel>
+
+										<p:inputText
+											value="#{customerUpdateBean.model.applicationDTO.ownername}"></p:inputText>
+
+										<h:outputLabel value="#{msg['app.address']}"></h:outputLabel>
+
+										<p:inputText
+											value="#{customerUpdateBean.model.applicationDTO.ownerAddress}"></p:inputText>
+										<h:outputLabel value="#{msg['app.id']}"></h:outputLabel>
+
+										<p:inputText
+											value="#{customerUpdateBean.model.applicationDTO.ownerID}"></p:inputText>
+
+
+										<h:outputLabel value="#{msg['app.telphone1']}"></h:outputLabel>
+
+										<p:inputText
+											value="#{customerUpdateBean.model.applicationDTO.ownerTelphone}"></p:inputText>
+
+
+									</p:panelGrid>
+
+								</p:card>
+								<p:divider></p:divider>
+								<p:card>
+
+
+									<p:panelGrid layout="grid" columns="4">
+										<p:commandButton value="#{msg['update']}"
+											action="#{customerUpdateBean.update}" update=":frm:messages"></p:commandButton>
+										<p:commandButton value="#{msg['cancel']}"
+											action="#{customerUpdateBean.cancel}"   ajax="false"></p:commandButton>
+										
+										<p:commandButton value="#{msg['print']}"></p:commandButton>
+										
+										<p:commandButton value="#{msg['suspended']}"></p:commandButton>
+									</p:panelGrid>
+
+
+
+								</p:card>
+
+
+
+
+							</b:column>
+						</b:row>
+					</b:container>
+
+
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</body>
+
+</html>

@@ -1,0 +1,64 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+											<p:panelGrid columns="1" layout="grid">
+												
+												<p:card id="fillfeilds1">
+													<p:panelGrid columns="4" layout="grid" 
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+														
+														<h:outputLabel value="#{msg['comm.customer.customerID']}"></h:outputLabel>
+														<p:outputLabel value="#{othPayment.customerDto.customerId}" readonly="true"/>
+														
+													</p:panelGrid>
+														
+													<p:panelGrid columns="4" layout="grid" 
+														styleClass="showcase-text-align-center"
+														columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+														
+														<h:outputLabel value="#{msg['app.name']}"></h:outputLabel>
+														<p:outputLabel id="app1E" value="#{othPayment.customerDto.customerName}"
+															readonly="true"></p:outputLabel>
+
+
+														<h:outputLabel value="#{msg['app.localID']}"></h:outputLabel>
+														
+														<p:outputLabel value="#{othPayment.customerDto.localityDTO.description}"
+															readonly="true" />
+
+														<h:outputLabel value="#{msg['app.address']}"></h:outputLabel>
+														<p:outputLabel id="app2v" value="#{othPayment.customerDto.applicationDTO.address}"
+															readonly="true"></p:outputLabel>
+
+
+														<h:outputLabel value="#{msg['comm.customer.nationality']}"></h:outputLabel>
+														<p:outputLabel value="#{othPayment.customerDto.nationalityDTO.nationalityName}"
+															readonly="true" />
+
+														<h:outputLabel value="#{msg['comm.customer.telephone']}"></h:outputLabel>
+
+														<p:outputLabel value="#{othPayment.customerDto.applicationDTO.telephone1}"
+															readonly="true">
+														</p:outputLabel>
+
+														<h:outputLabel value="#{msg['app.mobile1']}"></h:outputLabel>
+														<p:outputLabel value="#{othPayment.customerDto.phone}" readonly="true"></p:outputLabel>
+													</p:panelGrid>
+												</p:card>
+												
+												<br />
+
+											
+
+
+											</p:panelGrid>
+				
+</html>

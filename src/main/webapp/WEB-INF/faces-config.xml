@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<faces-config
+    xmlns="http://xmlns.jcp.org/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_2_2.xsd" 
+    version="2.2">
+
+<application>
+        <el-resolver>
+            org.springframework.web.jsf.el.SpringBeanFacesELResolver
+        </el-resolver>
+        
+        <locale-config>
+     	        <default-locale>en</default-locale>
+     	   </locale-config>
+	   <resource-bundle>
+		<base-name>core.bill.common.i18N.messages</base-name>
+		<var>msg</var>
+	   </resource-bundle>
+	   
+    </application>
+    
+    <!-- Start Role  -->
+    <navigation-rule> 
+   			<from-view-id>/bill/segesa/user/searchRole.xhtml</from-view-id> 
+   
+   			<navigation-case> 
+      				<from-outcome>updateRole</from-outcome> 
+      				<to-view-id>/bill/segesa/user/updateRole.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	
+	<navigation-rule> 
+   			<from-view-id>/bill/segesa/user/updateRole.xhtml</from-view-id> 
+   
+   			<navigation-case> 
+      				<from-outcome>searchRole</from-outcome> 
+      				<to-view-id>/bill/segesa/user/searchRole.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	<!-- End Role  -->
+	
+	<!-- Start Sys Config  -->
+    <navigation-rule> 
+   			<from-view-id>/bill/segesa/user/searchSysConfig.xhtml</from-view-id> 
+   
+   			<navigation-case> 
+      				<from-outcome>updateConfig</from-outcome> 
+      				<to-view-id>/bill/segesa/user/updateSysConfig.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	
+	<navigation-rule> 
+   			<from-view-id>/bill/segesa/user/updateSysConfig.xhtml</from-view-id> 
+   			<navigation-case> 
+      				<from-outcome>searchConfig</from-outcome> 
+      				<to-view-id>/bill/segesa/user/searchSysConfig.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	<!-- End Sys Config  -->
+	
+	<!-- Start group  -->
+    <navigation-rule> 
+   			<from-view-id>/bill/segesa/user/searchGroup.xhtml</from-view-id> 
+   
+   			<navigation-case> 
+      				<from-outcome>updateGroup</from-outcome> 
+      				<to-view-id>/bill/segesa/user/updateGroup.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	
+	<navigation-rule> 
+   			<from-view-id>/bill/segesa/user/updateGroup.xhtml</from-view-id> 
+   			<navigation-case> 
+      				<from-outcome>searchGroup</from-outcome> 
+      				<to-view-id>/bill/segesa/user/searchGroup.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	<!-- End group -->
+	
+	<!-- Start user  -->
+    <navigation-rule> 
+   			<from-view-id>/bill/segesa/user/searchUser.xhtml</from-view-id> 
+   
+   			<navigation-case> 
+      				<from-outcome>updateUser</from-outcome> 
+      				<to-view-id>/bill/segesa/user/updateUser.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	
+	<navigation-rule> 
+   			<from-view-id>/bill/segesa/user/updateUser.xhtml</from-view-id> 
+   			<navigation-case> 
+      				<from-outcome>searchUser</from-outcome> 
+      				<to-view-id>/bill/segesa/user/searchUser.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	<!-- End user -->
+	<!-- Start customer  -->
+    <navigation-rule> 
+   			<from-view-id>/bill/segesa/commerical/searchCustomer.xhtml</from-view-id> 
+   
+   			<navigation-case> 
+      				<from-outcome>updateCustomer</from-outcome> 
+      				<to-view-id>/bill/segesa/commerical/updateCustomer.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	
+	<navigation-rule> 
+   			<from-view-id>/bill/segesa/commerical/updateCustomer.xhtml</from-view-id> 
+   			<navigation-case> 
+      				<from-outcome>searchCustomer</from-outcome> 
+      				<to-view-id>/bill/segesa/commerical/searchCustomer.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	<!-- End customer -->
+	
+	<!-- Start contract  -->
+    <navigation-rule> 
+   			<from-view-id>/bill/segesa/commerical/searchContract.xhtml</from-view-id> 
+   
+   			<navigation-case> 
+      				<from-outcome>updateContract</from-outcome> 
+      				<to-view-id>/bill/segesa/commerical/updateContract.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	
+	<navigation-rule> 
+   			<from-view-id>/bill/segesa/commerical/updateContract.xhtml</from-view-id> 
+   			<navigation-case> 
+      				<from-outcome>searchContract</from-outcome> 
+      				<to-view-id>/bill/segesa/commerical/searchContract.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	<!-- End customer -->
+	
+	<!-- Start approval contract  -->
+    <navigation-rule> 
+   			<from-view-id>/bill/segesa/commerical/searchApproveContract.xhtml</from-view-id> 
+   
+   			<navigation-case> 
+      				<from-outcome>approvalContract</from-outcome> 
+      				<to-view-id>/bill/segesa/commerical/approveContract.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	
+	<navigation-rule> 
+   			<from-view-id>/bill/segesa/commerical/approveContract.xhtml</from-view-id> 
+   			<navigation-case> 
+      				<from-outcome>searchApprovalContract</from-outcome> 
+      				<to-view-id>/bill/segesa/commerical/searchApproveContract.xhtml</to-view-id> 
+   			</navigation-case> 
+	</navigation-rule>
+	
+
+	<!-- End customer -->
+	
+</faces-config>

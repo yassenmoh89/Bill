@@ -1,0 +1,152 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui">
+       
+       <h:head>
+       
+       </h:head>
+<body>
+<ui:composition  template="/WEB-INF/template/layout.xhtml">
+<ui:define name="body" >
+<div>
+<h:form id="frm">
+ <p:growl id="growl" showDetail="true"  /> 
+<p:panel header="Daily Transaction Report " style=" font-weight:bold;text-align:center;width:950px;margin:0 auto;direction: ltr"  >  
+         <p:panelGrid style="font-weight:bold;text-align:right;width:100%;margin:0 auto;width:850px;font-size:12px;direction: ltr"  >  
+        
+  <p:row> 
+   
+  <p:column>
+    <h:outputLabel  value="From " style="width:120px" />  
+      </p:column>
+      
+      <p:column> <p:calendar value="#{dailyReport.fromm}"></p:calendar> </p:column>
+      
+      
+      <p:column>
+    <h:outputLabel  value=" To" style="width:120px"/>  
+    </p:column>
+    
+   <p:column >
+    <p:calendar value="#{dailyReport.too}" style="width:120px" > </p:calendar>
+      </p:column>
+      <p:column colspan="2">
+    	<h:commandButton value="Search" id="carBtn" actionListener="#{dailyReport.pdf}" ajax="true"  upadate="@form" ></h:commandButton>  
+    	
+    </p:column>
+
+  	     </p:row>       
+</p:panelGrid>
+       <!--   	
+    <p:panel  style="border-color:black;" rendered="#{dailyReport.flag}" id="ou">
+    	<p:commandButton value="Print" type="button" icon="ui-icon-print" style="font-size:11px;font-weight:bold;">
+    	<p:printer target="print" />
+    	</p:commandButton>  
+    
+    	<p:commandButton value="Hide" type="button" icon="ui-icon-print" style="font-size:11px;font-weight:bold;">
+    	</p:commandButton> 
+    	
+    	<p:commandButton value="Show" type="button" icon="ui-icon-print" style="font-size:11px;font-weight:bold;">
+    	</p:commandButton>  
+    	 
+    	
+     <p:outputPanel id="print" style="width:900px;">
+        	<table style="width:840px;font-size:12px;">
+        		<tr>
+        		<td algin="center" colspan="4"><h3> Sudanese Peace Buliding Project Development</h3> 
+        		
+        		<b> Balance Sheet - Center : #{dailyReport.branchName} ,#{dailyReport.code}  </b>
+        		Daily Transaction - 
+        		</td>
+        		</tr>
+        		
+        		<tr>
+        		<td> from date</td>
+        		<td><h:outputText value="#{dailyReport.fromm}">
+        		<f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime>
+        		</h:outputText></td>
+        		<td>To </td>
+        		<td><h:outputText value="#{dailyReport.too}"> 
+        		<f:convertDateTime pattern="MM/dd/yyyy"></f:convertDateTime>
+        		</h:outputText></td>
+        		</tr>
+        		
+        		<tr>
+        		<td algin="center" colspan="4">  <hr/> </td>
+        		</tr>
+        	</table>
+        	
+        	<p:dataTable var="o" value="#{dailyReport.dailyList}" style="width:850px;font-size:12px;font-weight:bold;" emptyMessage=""  scrollable="300"
+        	sortBy="serial"  >
+       
+        	<p:column headerText="Date">
+        		<h:outputText value="#{o.transDate}"></h:outputText>
+        	</p:column>
+        	
+        	<p:column headerText="Acc No">
+        		<h:outputText value="#{o.acountID}"></h:outputText>
+        	</p:column>
+        	
+        	<p:column headerText="Acc Name">
+        		<h:outputText value="#{o.accountName}"></h:outputText>
+        	</p:column>
+        	
+        	<p:column headerText="Voucher">
+        		<h:outputText value="#{o.voucherID}"></h:outputText>
+        	</p:column>
+        	
+        	<p:column headerText="Trans" sortBy="serial" >
+        		<h:outputText value="#{o.serial}"></h:outputText>
+        	</p:column>
+        	
+        	<p:column headerText="Debit">
+        		<h:outputText value="#{o.debit}">
+        		<f:convertNumber minFractionDigits="2"></f:convertNumber></h:outputText>
+        		
+        	</p:column>
+        	
+        	<p:column headerText="credit">
+        		<h:outputText value="#{o.credit}">
+        		<f:convertNumber minFractionDigits="2"></f:convertNumber>
+        		</h:outputText>
+        		
+        		
+        	</p:column>
+        	
+        	<p:column headerText="Flavour">
+        		<h:outputText value="#{o.flavour}"></h:outputText>
+        	</p:column>
+        	
+        	<p:column headerText="Nariation">
+        		<h:outputText value="#{o.nari}"></h:outputText>
+        	</p:column>
+        	
+        	 <p:summaryRow>  
+            <p:column colspan="8" style="text-align:right">  
+                Total:  
+            </p:column>  
+  
+            <p:column>  
+                  
+            </p:column>  
+        </p:summaryRow>
+        	</p:dataTable>
+        	
+        	<br/>
+        	</p:outputPanel>
+        	</p:panel>
+        	
+        	-->
+    </p:panel>
+    </h:form>  
+    </div>
+</ui:define>
+</ui:composition>
+</body>
+	
+</html>

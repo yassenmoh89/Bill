@@ -1,0 +1,475 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/WEB-INF/template/layout.xhtml">
+		<ui:define name="body">
+		<div>
+			<h:form id="frm" prependId="false">
+		    <p:growl id="messages" showDetail="true"/>
+<b:container style="width:80%">
+<b:row styleClass="myRow">
+<b:column col-md="12">
+
+				<p:card>
+				<p:panelGrid columns="4" layout="grid">
+
+											<h:outputLabel value="#{msg['app.contract.no']}"
+													style="font-size:20px;text-align:left;" />
+
+											<p:inputText value="#{invoiceBean.contractId}"
+													autocomplete="off" style="font-weight:bold;font-size:20px"
+													onkeypress="if (event.keyCode == 13) { tata(); return false;}">
+												</p:inputText> <p:remoteCommand name="tata" update="allInfo,allList ,dataTable"
+													actionListener="#{invoiceBean.searchcontract}"></p:remoteCommand>
+
+				</p:panelGrid>
+				</p:card>
+				<p:divider></p:divider>
+				<p:card>
+									<p:tabView id="allInfo">
+									<p:tab title="#{msg['app.fieldset.clientInformation']}">
+									<p:panelGrid id="allInfo2" columns="4" layout="grid" columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4,ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+											
+											<h:outputLabel value="#{msg['app.customerName']}"
+														></h:outputLabel>
+										    <p:inputText id="cusnam"
+														value="#{invoiceBean.contractDto.customerDTO.customerName}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+										
+										<h:outputLabel
+														value="#{msg['inv.invoice.location']}" ></h:outputLabel>
+												<p:inputText id="lnam"
+														value="#{invoiceBean.contractDto.localityDTO.description}" 
+														readonly="true">
+													</p:inputText>
+												<h:outputLabel value="#{msg['app.address']}"
+														></h:outputLabel>
+												<p:inputText value="#{invoiceBean.contractDto.direction}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+
+											   <h:outputLabel
+														value="#{msg['inv.invoice.cutomerNumber']}"
+														></h:outputLabel>
+											<p:inputText value="#{invoiceBean.contractDto.customerDTO.customerId}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+											<h:outputLabel
+														value="#{msg['inv.invoice.contractNumber']}"
+														></h:outputLabel>
+										    <p:inputText value="#{invoiceBean.contractDto.contractId}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+											
+
+										   										
+
+
+									<h:outputLabel
+														value="#{msg['inv.invoice.pre.amount']}"
+														style="width:30px"></h:outputLabel>
+									<p:inputText id="imprt"
+														value="#{invoiceBean.requiredAmount}"
+														style="width:100px;color:red;font-size:14px;font-wieght:bold"
+														readonly="true">
+														<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+													</p:inputText>
+
+									<h:outputText value="#{msg['cashier.penalty']}"></h:outputText>
+											
+									<h:outputText
+														style="font-size:18px;font-weight:bold;color:red"
+														value="#{invoiceBean.penaliz}"></h:outputText>
+									<h:outputText value="Total"></h:outputText>
+									<h:outputText
+														style="font-size:18px;font-weight:bold;" id="totF"
+														value="#{invoiceBean.penaliz+invoiceBean.requiredAmount}">
+														<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+													</h:outputText>
+
+								</p:panelGrid>
+								
+									</p:tab>
+									<p:tab title="#{msg['app.contract.info.fieldset']}">
+										<p:panelGrid  columns="4" layout="grid" columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4,ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+																				
+												<h:outputLabel
+														value="#{msg['inv.invoice.meterNumber']}"
+														></h:outputLabel>
+										  <p:inputText value="#{invoiceBean.contractDto.meterNumber}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+										  <h:outputLabel value="#{msg['inv.invoice.fase']}"
+														></h:outputLabel>
+										  <p:inputText value="#{invoiceBean.contractDto.phaseDTO.description}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+										  <h:outputLabel
+														value="#{msg['inv.invoice.circuitNumber']}"
+														></h:outputLabel>
+										  <p:inputText value="#{invoiceBean.contractDto.circuitoNum}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+										
+
+										<h:outputLabel value="#{msg['inv.invoice.type']}"
+														style="width:30px"></h:outputLabel>
+										<p:inputText id="tnam" value="#{invoiceBean.contractDto.typeDTO.description}"
+														style="width:100px;background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+
+										<h:outputLabel value="#{msg['inv.invoice.stats']}"
+														style="width:30px"></h:outputLabel>
+										<p:inputText value="#{invoiceBean.contractDto.meterStatusDTO.description}"
+														style="width:100px;background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+
+									    <h:outputLabel value="#{msg['inv.invoice.iguala']}"
+														style="width:30px"></h:outputLabel>
+										<p:selectBooleanCheckbox id="igual"
+														value="#{invoiceBean.contractDto.iguala}" disabled="true"
+														style="width:50px">
+													</p:selectBooleanCheckbox>
+										<h:outputLabel
+														value="#{msg['inv.invoice.fixedAmount']}"
+														style="width:30px"></h:outputLabel>
+										<p:inputText value="#{invoiceBean.contractDto.fixedPriceValue}"
+														style="width:50px;background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+						
+										</p:panelGrid>
+									</p:tab>
+									</p:tabView>
+									
+									<p:divider></p:divider>	
+													
+									<p:panelGrid layout="grid" columns="6" 
+									columnClasses="ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-4 ui-lg-2">
+										
+										<p:panelGrid layout="grid" columns="2" columnClasses="ui-g-12 ui-md-6 ui-lg-4,ui-g-12 ui-md-6 ui-lg-8">
+												<h:outputLabel value="#{msg['inv.invoice.year']}"></h:outputLabel>
+												<p:inputText style="background-color:#ECFAFA" id="y" value="#{invoiceBean.year_reading}"></p:inputText>
+										</p:panelGrid>
+										<p:panelGrid layout="grid" columns="2">
+												<h:outputLabel   value="#{msg['inv.invoice.month']}"></h:outputLabel>
+												<p:inputText style="background-color:#ECFAFA" id="m"
+														value="#{invoiceBean.month_reading}"></p:inputText>
+										</p:panelGrid>
+										<p:panelGrid layout="grid" columns="2" columnClasses="ui-g-12 ui-md-6 ui-lg-8,ui-g-12 ui-md-6 ui-lg-4">
+												<h:outputLabel value="#{msg['inv.invoice.newMeter']}"></h:outputLabel>
+												<p:selectBooleanCheckbox
+														value="#{invoiceBean.newMeter_reading}" style="margin-top:6px;"
+														disabled="#{invoiceBean.contractDto.iguala}"></p:selectBooleanCheckbox>
+										</p:panelGrid>
+										<p:panelGrid layout="grid" columns="2">
+												<h:outputLabel value="#{msg['inv.invoice.reading']}"></h:outputLabel>
+												<p:inputText
+														style="background-color:#F3FF6D" id="r"
+														value="#{invoiceBean.reading_reading}"
+														readonly="#{invoiceBean.contractDto.iguala}"></p:inputText>
+										</p:panelGrid>
+										<p:panelGrid layout="grid" columns="2">
+												<h:outputLabel	value="#{msg['inv.invoice.changeReading']}"></h:outputLabel>
+												<p:inputText value="#{invoiceBean.readChange_reading}"
+														readonly="#{invoiceBean.contractDto.iguala}"
+														style="background-color:#ECFAFA"></p:inputText>
+										</p:panelGrid>
+										
+										<p:commandButton value="#{msg['inv.invoice.enterReading']}"
+														action="#{invoiceBean.addReading}" style="margin-top:6px;"
+														update="@form,:frm:dataTable:,:frm:messages:" ajax="true">
+										</p:commandButton>
+
+										</p:panelGrid>
+									
+								</p:card>
+								<p:divider></p:divider>
+								<p:card>	
+									<p:outputPanel id="allList">
+										
+										
+										
+										<p:dataTable 
+										id="dataTable"  
+										var="invoice1"
+										   paginator="true"
+										    paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+										    rows="6"  value="#{invoiceBean.invoiceLazyDataModel}" 
+											scrollWidth="100%" 
+											rowStyleClass="#{invoice1.paymentStatus eq 'ture' ? 'unpaid' : 'paid' }"
+											>
+											 <p:ajax event="rowSelect" listener="#{invoiceBean.selectRow(invoice1)}" oncomplete="PF('invDialog').show()" update="dl"/>
+
+											<p:column style="width:45px;text-align:center;" headerText="#{msg['cash.comp.invoice']}">
+												<p:commandLink actionListener="#{invoiceBean.selectRow(invoice1)}"
+												 oncomplete="PF('invDialog').show()" update="dl"> 
+												<h:outputLabel value="#{invoice1.invoiceId}"
+													 />
+												</p:commandLink>
+											</p:column>
+
+											<p:column style="width:50px;" headerText="#{msg['inv.invoice.year']}">
+												<h:outputLabel value="#{invoice1.year}" />
+											</p:column>
+
+											<p:column style="width:15px;" headerText="#{msg['inv.invoice.month']}">
+												<h:outputLabel value="#{invoice1.month}" />
+											</p:column>
+											
+											<p:column style="width:47px;text-align:center;" headerText="#{msg['inv.invoice.reading']}">
+												<h:outputLabel value="#{invoice1.readingDTO.reading}"></h:outputLabel>
+											</p:column>
+
+											<p:column style="width:45px;text-align:center;" headerText="#{msg['inv.invoice.lChange']}">
+												<h:outputLabel value="#{invoice1.readingDTO.lchange}"></h:outputLabel>
+											</p:column>
+
+											<p:column style="width:47px;text-align:center;" headerText="#{msg['inv.invoice.consumption']}">
+												<h:outputLabel value="#{invoice1.consumption}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+
+											<p:column style="width:27px;text-align:center;" headerText="#{msg['inv.invoice.price']}" >
+												<h:outputLabel value="#{invoice1.price}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+
+											<p:column style="width:55px;text-align:center;"  headerText="#{msg['inv.invoice.total']}" >
+												<h:outputLabel value="#{invoice1.amount}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+
+											<p:column style="width:22px;text-align:center;" headerText="#{msg['inv.invoice.discount%']}">
+												<h:outputLabel value="#{invoice1.discountRate}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+
+											</p:column>
+
+											<p:column style="width:43px;text-align:center;" headerText="#{msg['inv.invoice.discount']}">
+												<h:outputLabel value="#{invoice1.discount}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+
+											<p:column style="width:40px;text-align:center;" headerText="#{msg['inv.invoice.power']}">
+												<h:outputLabel value="#{invoice1.power}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+											
+											<p:column style="width:46px;text-align:center;"  headerText="#{msg['inv.invoice.mConter']}">
+												<h:outputLabel value="#{invoice1.mcounter}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+
+											<p:column style="width:47px;text-align:center;" headerText="#{msg['inv.invoice.taxes']}">
+												<h:outputLabel value="#{invoice1.tax}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+											
+											<p:column style="width:40px;text-align:center;"  headerText="#{msg['cash.panality']}">
+												<h:outputLabel value="#{invoice1.penality}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+											
+											<p:column style="width:55px;text-align:center;" headerText="#{msg['inv.invoice.fcfas']}">
+												
+												<h:outputLabel value="#{invoice1.amountPaid + invoice1.rgrossAmount}" rendered="#{invoice1.paymentStatus}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+												
+												<h:outputLabel value="#{invoice1.amountPayable + invoice1.rgrossAmount}" rendered="#{not invoice1.paymentStatus}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+												
+											</p:column>
+											
+											<p:column style="width:40px;text-align:center;" headerText="#{msg['rep.invoice.credit']}">
+											
+												<h:outputLabel value="#{invoice1.rgrossAmount}" >
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+									
+											</p:column>
+											
+											<p:column style="width:55px;text-align:center;" headerText="#{msg['inv.invoice.income']}">
+												<h:outputLabel value="#{invoice1.amountPaid}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+											
+											<p:column style="width:55px;text-align:center;" headerText="#{msg['inv.invoice.pendent']}">
+												<h:outputLabel value="#{invoice1.amountPayable}">
+													<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+												</h:outputLabel>
+											</p:column>
+											
+											<p:column style="width:70px" headerText="#{msg['inv.invoice.pre.date']}" >
+												<h:outputLabel value="#{invoice1.createdDate}">
+													 <f:convertDateTime type="date" pattern="dd/MM/yyyy"></f:convertDateTime>
+												</h:outputLabel>
+											</p:column>
+
+											<p:column style="width:190px" headerText=" Factura Do">
+												<h:outputLabel value="#{invoice1.paidBy}"></h:outputLabel>
+											</p:column>
+
+										</p:dataTable>
+
+						<p:dialog id="dl" header="Invoice " showEffect="fade"  width="80%" widgetVar="invDialog" resizable="true">
+							<p:divider></p:divider>
+								<p:card>
+									<p:outputPanel id="resPancle">
+
+										<p:panelGrid columns="4" layout="grid" id="buton1" columnClasses="ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-8 ui-lg-4,ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-8 ui-lg-4">
+										
+										<h:outputLabel value="#{msg['inv.invoice.year']}"></h:outputLabel>
+										<h:outputLabel value="#{invoiceBean.invoiceDto.year}"></h:outputLabel>
+										
+										<h:outputLabel value="#{msg['inv.invoice.month']}"></h:outputLabel>
+										<h:outputLabel value="#{invoiceBean.invoiceDto.month}"></h:outputLabel>
+										
+										<h:outputLabel value="#{msg['inv.invoice.consumption']}"></h:outputLabel>
+										<h:outputLabel value="#{invoiceBean.invoiceDto.consumption}"></h:outputLabel>
+										
+										<h:outputLabel value="#{msg['inv.invoice.price']}"></h:outputLabel>
+										<h:outputLabel value="#{invoiceBean.invoiceDto.price}"></h:outputLabel>
+
+										<h:outputLabel value="#{msg['inv.invoice.power']}"></h:outputLabel>
+										<h:outputLabel value="#{invoiceBean.invoiceDto.power}">
+										<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+										</h:outputLabel>		
+										
+										<h:outputLabel value="#{msg['inv.invoice.mConter']}"></h:outputLabel>
+										<h:outputLabel value="#{invoiceBean.invoiceDto.mcounter}">
+										<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+										</h:outputLabel>									
+
+										<h:outputLabel value="#{msg['inv.invoice.mConter']}"></h:outputLabel>
+																				
+										<h:outputLabel value="#{invoiceBean.invoiceDto.mcounter}">
+										<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+										</h:outputLabel>
+										
+										<h:outputLabel value="#{msg['inv.invoice.taxes']}"></h:outputLabel>
+										<h:outputLabel value="#{invoiceBean.invoiceDto.tax}">
+										<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+										</h:outputLabel>
+										
+										<h:outputLabel value="#{msg['cash.panality']}"></h:outputLabel>
+										<h:outputLabel value="#{invoiceBean.invoiceDto.penality}">
+										<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+										</h:outputLabel>
+
+										<h:outputLabel value="#{msg['inv.invoice.pendent']}" style="font-weight:bold;color: #252eb5;"></h:outputLabel>
+										<h:outputLabel value="#{invoiceBean.invoiceDto.amountPayable}" style="font-weight:bold;color: #252eb5;">
+										<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+										</h:outputLabel>										
+										
+										<!--  h:outputLabel value="#{msg['inv.invoice.pre.date']}"></h:outputLabel>
+										<h:outputLabel value="#{invoice.invoiceRow.fromD}">
+										<f:convertDateTime type="date" pattern="dd/MM/yyyy"></f:convertDateTime>
+										</h:outputLabel -->
+										
+										</p:panelGrid>
+										
+										<!--  p:panelGrid layout="grid" columns="4" columnClasses="ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-8 ui-lg-4">
+										<h:outputLabel value="#{msg['inv.invoice.fcfas']}"></h:outputLabel>
+										<h:outputLabel value="#{invoice.invoiceRow.totalAmount}" style="background:#f5f564">
+										<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+										</h:outputLabel>
+										</p:panelGrid>
+										
+										<p:panelGrid layout="grid" columns="4" columnClasses="ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-8 ui-lg-4">									
+										<h:outputLabel value="#{msg['inv.invoice.discount%']}" style="width:30px"></h:outputLabel>
+										<p:inputText value="#{invoice.discount}" style="width:90px;background-color:#F3FF6D" disabled="true">
+										</p:inputText>
+										</p:panelGrid -->
+										
+								</p:outputPanel>
+						</p:card>
+						<p:divider></p:divider>
+						<p:card>
+										<p:panelGrid layout="grid" columns="4">
+												<p:commandButton rendered="#{not invoiceBean.invoiceDto.createdInvoice}" id="b1" 
+														style="width:120px"
+														value="#{msg['inv.invoice.makeInvoice']}"
+														action="#{invoiceBean.addFactura}"
+														update="@form,:frm:dataTable:,:frm:messages:" ajax="true">
+
+													</p:commandButton>
+											<p:commandButton rendered="#{invoiceBean.invoiceDto.createdInvoice}" 
+											disabled="#{invoiceBean.invoiceDto.paymentStatus}"
+														style="width:120px"
+														value="#{msg['inv.invoice.deleteInvoice']}"
+														action="#{invoiceBean.cancelInvoice}"
+														update="dataTable,:frm:messages:,dl" ajax="true"></p:commandButton>
+														
+											<p:commandButton rendered="#{invoiceBean.flagTaxBtn}"
+											 			style="width:120px"
+														value="#{msg['inv.invoice.cancelIVA']}"
+														action="#{invoiceBean.cancelTax}"
+														update="dataTable,:frm:messages:,dl" ajax="true"></p:commandButton>
+														
+											<p:commandButton rendered="#{invoiceBean.invoiceDto.createdInvoice}"
+														style="width:120px" value="#{msg['inv.invoice.print']}"
+														actionListener="#{invoiceBean.printBill}" update="@form"
+														ajax="false" id="cmdPrint" disabled="#{invoiceBean.invoiceDto.paymentStatus}"></p:commandButton>
+														
+											<p:commandButton rendered="#{invoiceBean.flagPenalityBtn}"  id="b2" 
+											onclick="if (! confirm('Realmente quiero hacer esto?')) return false" 
+											value="#{msg['inv.invoice.removePenalty']}"  action="#{invoiceBean.cancelPenality}" 
+											update="dataTable,:frm:messages:,dl" ajax="true" ></p:commandButton>
+											
+											<p:commandButton rendered="#{not invoiceBean.invoiceDto.createdInvoice}" disabled="#{invoiceBean.invoiceDto.paymentStatus}"
+														style="width:120px"
+														value="#{msg['inv.invoice.deleteReading']}"
+														action="#{invoiceBean.cancelReading}"
+														update="dataTable,:frm:messages:,dl" ajax="true"></p:commandButton>	
+											</p:panelGrid>
+						</p:card>
+						</p:dialog>
+
+					</p:outputPanel>
+							
+				</p:card>
+							
+					</b:column>
+				</b:row>
+			</b:container>
+			</h:form>
+</div>
+		</ui:define>
+	</ui:composition>
+
+</body>
+
+</html>

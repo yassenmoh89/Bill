@@ -1,0 +1,114 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+
+</h:head>
+<body>
+	<ui:composition template="/WEB-INF/template/layout.xhtml">
+		<ui:define name="body">
+			<div>
+				<h:form id="frm" prependId="false">
+					<p:messages id="messages" showDetail="true" closable="true">
+           					 
+   							</p:messages>
+					<b:container>
+						<b:row styleClass="myRow">
+							<b:column col-md="12">
+								<br />
+								<p:card>
+									<f:facet name="title">#{msg['group.search.title']} </f:facet>
+								</p:card>
+								<p:divider></p:divider>
+								<p:card>
+									<p:panelGrid columns="2" layout="grid"
+										styleClass="showcase-text-align-center"
+										columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4,ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+										<h:outputLabel value="#{msg['group.name']}"></h:outputLabel>
+										<p:inputText value="#{groupSearchBean.certeria.groupName}"></p:inputText>
+
+										<h:outputLabel value="#{msg['group.code']}"></h:outputLabel>
+										<p:inputText value="#{groupSearchBean.certeria.groupCode}"></p:inputText>
+
+										<h:outputLabel value="#{msg['user.status']}"></h:outputLabel>
+										
+										<p:selectOneMenu id="console"
+											value="#{groupSearchBean.certeria.status}" unselectable="false">
+											<f:selectItem itemLabel="#{msg['se.common.select.all']}" />
+												
+											<f:selectItem itemLabel="#{msg['user.status.active']}"
+												itemValue="ACT" />
+											<f:selectItem itemLabel="#{msg['user.status.active']}"
+												itemValue="INACT" />
+										</p:selectOneMenu>
+
+
+									</p:panelGrid>
+<p:autoUpdate/>
+								</p:card>
+								<p:divider></p:divider>
+								<p:card>
+										<p:panelGrid layout="grid" columns="4" columnClasses="ui-g-6 ui-md-6 ui-lg-4, ui-g-6 ui-md-6 ui-lg-4,ui-lg-2,ui-lg-2">
+											<p:commandButton value="#{msg['search']}"  action="#{groupSearchBean.search}" update="frm,tbl" ></p:commandButton>
+											<p:commandButton value="#{msg['cancel']}" action="#{groupSearchBean.reset}" update="frm"></p:commandButton>
+										</p:panelGrid>
+									
+								</p:card>
+								
+								
+								<p:divider></p:divider>
+								<p:card id="tbl" rendered="#{groupSearchBean.groupLazyDataModel ne null}">
+									
+									<p:dataTable id="tbl-list" var="group"  paginator="true" rows="10"
+									rowsPerPageTemplate="5,10,15" lazy="true"
+										value="#{groupSearchBean.groupLazyDataModel}" 
+										 paginatorTemplate="{RowsPerPageDropdown} {FirstPageLink} {PreviousPageLink} {CurrentPageReport} {NextPageLink} {LastPageLink}"
+										 styleClass="p-mt-2">
+
+										<p:column headerText="#{msg['group.name']}">
+										<p:commandLink
+											action="#{groupSearchBean.goToGroupUpdate(group.groupId)}" ajax="false">
+											<h:outputLabel value="#{group.groupName}" />
+										</p:commandLink>
+										</p:column>
+
+										<p:column headerText="#{msg['group.code']}">
+											<h:outputLabel value="#{group.groupCode}" />
+										</p:column>
+
+										<p:column headerText="#{msg['user.status']}" style="width:20%">
+											
+												<p:outputPanel rendered="#{group.status eq 'ACT'}">
+											        <i  class="pi pi-check-circle" style="font-size: 18px;color:green" ></i>
+											        </p:outputPanel>
+											        
+											        <p:outputPanel rendered="#{group.status ne 'ACT'}">
+											        <i  class="pi pi-minus-circle" style="font-size: 18px;color:orange;" ></i>
+											        </p:outputPanel>
+										</p:column>
+
+									</p:dataTable>
+								</p:card>
+
+								
+							</b:column>
+						</b:row>
+					</b:container>
+
+
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</body>
+
+</html>

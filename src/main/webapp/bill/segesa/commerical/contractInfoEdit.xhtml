@@ -1,0 +1,149 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+											<p:card styleClass="gridMinHieght">
+												<f:facet name="title">#{msg['app.contract.info.fieldset']}</f:facet>
+												<p:panelGrid columns="4" layout="grid" 
+													styleClass="showcase-text-align-center"
+													columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+													<h:outputLabel value="#{msg['app.contract.budgetPaid']}">
+													</h:outputLabel>
+													<p:inputText  />
+
+
+													<h:outputLabel value="#{msg['app.contract.power']}"></h:outputLabel>
+													<p:inputText value="#{contractBean.model.power}"></p:inputText>
+													
+													
+													<h:outputLabel value="#{msg['app.localID']}">
+													</h:outputLabel>
+													
+													<p:selectOneMenu value="#{contractBean.model.localityDTO}"
+													filter="true" filterMatchMode="startsWith"  
+													converter="localityConverter">
+
+													<f:selectItem itemLabel="#{msg['se.common.select.one']}"></f:selectItem>
+													<f:selectItems value="#{customerBean.localityList}" var="o"
+														itemValue="#{o}" itemLabel="#{o.description} "></f:selectItems>
+
+													</p:selectOneMenu>
+
+
+													<h:outputLabel value="#{msg['comm.customer.telephone']}"></h:outputLabel>
+													<p:inputText value="#{contractBean.model.telephone}">
+													</p:inputText>
+													
+													
+													
+													<h:outputLabel value="#{msg['app.contract.beneficiary']}">
+													</h:outputLabel>
+													<p:inputText value="#{contractBean.model.beneficiary}" />
+
+													<h:outputLabel value="#{msg['app.contract.director']}"></h:outputLabel>
+
+													<p:inputText value="#{contractBean.model.direction}" />
+
+													<h:outputLabel value="#{msg['app.contract.noCircuit']}"></h:outputLabel>
+													<p:inputMask value="#{contractBean.model.circuitoNum}" mask="999,999" />
+													<h:outputLabel value="#{msg['app.contract.type']}">
+													</h:outputLabel>
+													<p:selectOneMenu style="width:80%"
+														value="#{contractBean.model.typeDTO}" required="true" converter="typeConverter"
+														requiredMessage="#{msg['app.insp.valid.supplyType']}">
+														<f:selectItems value="#{contractBean.typeDTOList}" var="c"
+															itemLabel="#{c.description} "
+															itemValue="#{c}"></f:selectItems>
+													</p:selectOneMenu>
+
+													<h:outputLabel
+														value="#{msg['app.contract.typeOfContract']}"></h:outputLabel>
+													<p:selectOneMenu style="width:80%" converter="contractTypeConverter"
+														value="#{contractBean.model.contractTypeDTO}" required="true"
+														requiredMessage="#{msg['app.insp.valid.supplyType']}">
+							
+														<f:selectItems value="#{contractBean.contractTypeList}" var="c"
+															itemLabel="#{c.description} "
+															itemValue="#{c}"></f:selectItems>
+													</p:selectOneMenu>
+
+													<h:outputLabel value="#{msg['app.contract.contractDate']}"></h:outputLabel>
+													<p:calendar value="#{contractBean.model.contractDate}"></p:calendar>
+												</p:panelGrid>
+												<p:panelGrid columns="3" layout="grid"
+													columnClasses="ui-g-12 ui-md-6 ui-lg-3, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-5">
+													<p:panelGrid columns="3" layout="grid">
+														<h:outputLabel value="#{msg['app.contract.fixedPrice']}"></h:outputLabel>
+														<p:selectBooleanCheckbox value="#{contractBean.model.fixedPriceOp}">
+															<p:ajax update="Isfixed"></p:ajax>
+														</p:selectBooleanCheckbox>
+														<h:outputLabel id="Isfixed">
+															<h:inputText value="#{contractBean.model.fixedPriceValue}"
+																style="width:80%" rendered="#{contractBean.model.fixedPriceOp}" />
+														</h:outputLabel>
+													</p:panelGrid>
+													<p:panelGrid columns="6" layout="grid">
+														<h:outputLabel value="#{msg['app.contract.digit']}"></h:outputLabel>
+														<h:outputLabel value="A"></h:outputLabel>
+														<h:inputText value="#{contractBean.model.digitA}" style="width:80%" />
+														<h:outputLabel value="R"></h:outputLabel>
+														<h:inputText value="#{contractBean.model.digitR}" style="width:80%" />
+													</p:panelGrid>
+													<p:panelGrid columns="6" layout="grid"
+														columnClasses="ui-g-12 ui-md-4 ui-lg-2,ui-g-12 ui-md-6 ui-lg-2,ui-g-12 ui-md-6 ui-lg-2">
+														<h:outputLabel value="#{msg['app.contract.coefficient']}"></h:outputLabel>
+														<h:outputLabel value="A"></h:outputLabel>
+														<h:inputText value="#{contractBean.model.coefficientA}" style="width:80%" />
+														<h:outputLabel value="R"></h:outputLabel>
+														<h:inputText value="#{contractBean.model.coefficient_R}" style="width:80%" />
+													</p:panelGrid>
+												</p:panelGrid>
+
+												<p:panelGrid columns="4" layout="grid"
+													styleClass="showcase-text-align-center"
+													columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+
+													<h:outputLabel value="#{msg['app.contract.status']}"></h:outputLabel>
+													<p:selectOneMenu style="width:80%" converter="meterStatusConverter"
+														value="#{contractBean.model.meterStatusDTO}" required="true"
+														requiredMessage="#{msg['app.insp.valid.supplyType']}">
+														<f:selectItems value="#{contractBean.meterStatusDTOList}" var="c"
+															itemLabel="#{c.description}"
+															itemValue="#{c}"></f:selectItems>
+													</p:selectOneMenu>
+
+													<h:outputLabel value="#{msg['app.contract.typeOfPayment']}"></h:outputLabel>
+													<p:selectOneMenu value="#{contractBean.model.contractPaymentDTO}" converter="contractPaymentConverter"
+														style="width:70%;">
+														<f:selectItems value="#{contractBean.contractPaymentDTOList}" var="c"
+															itemLabel="#{c.description} "
+															itemValue="#{c}"></f:selectItems>
+													</p:selectOneMenu>
+
+													<h:outputLabel value="#{msg['app.contract.payPeriod']}"></h:outputLabel>
+													<p:selectOneMenu value="#{contractBean.model.contractBillingDTO}" converter="contractBillingConverter">
+													
+													<f:selectItems value="#{contractBean.contractBillingList}" var="p"
+															itemLabel="#{p.description} "
+															itemValue="#{p}"></f:selectItems>
+													</p:selectOneMenu>
+
+													<h:outputLabel value="#{msg['app.contract.alta']}"></h:outputLabel>
+													<p:calendar value="#{contractBean.model.fechaAlta}" />
+													
+
+
+												</p:panelGrid>
+											</p:card>
+
+										
+
+</html>

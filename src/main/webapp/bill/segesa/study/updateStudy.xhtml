@@ -1,0 +1,397 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui" 
+       xmlns:b="http://bootsfaces.net/ui">
+       
+       <h:head>
+       
+       </h:head>
+<body>
+<ui:composition  template="/WEB-INF/template/layout.xhtml">
+<ui:define name="body" >
+		<f:metadata>
+    		<f:viewParam name="updateKey" value="#{studyUpdateBean.updateKey}" />
+    		<f:viewAction action="#{studyUpdateBean.onload}" />
+		</f:metadata>
+<div>
+<h:form id="frm" prependId="false">
+ <p:growl id="messages" showDetail="true" />  
+
+					<b:container>
+						<b:row styleClass="myRow">
+							<b:column col-md="12">
+								<br />
+								<p:card id="pa">
+									<f:facet name="title">#{msg['app.study.budget.title']}</f:facet>
+      
+       
+        <p:outputPanel id="inTab">
+        <p:tabView id="tabView">  
+  	<p:tab title="#{msg['app.study.budget.title']}" >
+  		<p:outputPanel styleClass="gridMinHieght">
+  		<p:card >
+       <p:panelGrid id="fillfeilds" layout="grid" columns="4" columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4,ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+
+      	<h:outputLabel value="#{msg['app.name']}" ></h:outputLabel>
+       
+        <p:inputText  id="app1" value="#{studyUpdateBean.model.customerDTO.customerName}"  readonly="true"></p:inputText>
+       
+        
+        <h:outputLabel value="#{msg['app.localID']}" ></h:outputLabel>
+        
+        <p:inputText id="loc"  value="#{studyUpdateBean.model.customerDTO.calle}" readonly="true"  filter="true" filterMatchMode="startsWith"/>
+        
+        <h:outputLabel value="#{msg['app.address']}" ></h:outputLabel>
+        
+        <p:inputText  id="app2" value="#{studyUpdateBean.model.customerDTO.applicationDTO.address}" readonly="true"></p:inputText>
+        
+        <h:outputLabel value="#{msg['comm.customer.nationality']}" ></h:outputLabel>
+        
+        <p:inputText  value="#{studyUpdateBean.model.customerDTO.nationalityDTO.nationalityName}" readonly="true" />
+
+        <h:outputLabel value="#{msg['comm.customer.telephone']}" ></h:outputLabel>
+        
+        <p:inputText value="#{studyUpdateBean.model.customerDTO.phone}" readonly="true" >
+        </p:inputText>
+        
+        
+         <h:outputLabel value="#{msg['app.mobile1']}" ></h:outputLabel>
+        
+        <p:inputText value="#{studyUpdateBean.model.customerDTO.applicationDTO.mobile1}" readonly="true"></p:inputText>
+       
+        </p:panelGrid>
+        </p:card>
+       
+        <p:divider>#{msg['app.study.budget.fieldset.rawMaterial']} </p:divider>
+         
+         <p:panelGrid  layout="grid" columns="3" columnClasses="ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-4,ui-g-12 ui-md-6 ui-lg-4">
+
+        <h:outputLabel  value="#{msg['inventory.item.itemName']}"></h:outputLabel>
+    	<h:outputLabel  value="#{msg['inventory.item.itemQuantity']}"></h:outputLabel>
+    	<h:outputLabel  value="#{msg['inventory.item.itemPrice']}"></h:outputLabel>
+    	</p:panelGrid>
+        
+        <p:panelGrid  layout="grid" columns="3" columnClasses="ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-4,ui-g-12 ui-md-6 ui-lg-4">
+
+        <p:selectOneMenu   value="#{studyUpdateBean.itemsRow}" id="iCode"  style="width:90%" converter="itemConverter" requiredMessage="#{msg['inventory.item.valid.itemCode']}" filter="true" filterMatchMode="startsWith">
+    	  <f:selectItem itemLabel="#{msg['se.common.select.one']}"></f:selectItem>
+    	  <f:selectItems value="#{studyUpdateBean.itemsList}" var="i" itemLabel="#{i.itemName}" itemValue="#{i}"></f:selectItems>
+    	  <p:ajax event="change" update="pric"></p:ajax>
+    	  </p:selectOneMenu> 
+    	  
+    	  <p:inputText  value="#{studyUpdateBean.quantity}" id="qnt" autocomplete="off"
+    	  onkeypress="if (event.keyCode == 13) { onchange(); return false; }">
+    	  <p:ajax event="change"   render=":frm:tabView:dataTable:,messages,qnt,:frm:inTab:" listener="#{studyUpdateBean.addRow}" update=":frm:tabView:dataTable:,messages,qnt,dataTable:tot,:frm:inTab:"></p:ajax>
+    	  </p:inputText>
+
+	    	  <p:inputText  value="#{studyUpdateBean.itemsRow.itemPrice}" id="pric" readonly="true">
+	    	  <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+	    	  </p:inputText>
+          
+        </p:panelGrid>
+        
+       <p:divider></p:divider>
+        
+	<p:dataTable id="dataTable" var="ts" value="#{studyUpdateBean.transList}"  >  
+        
+        <p:column headerText="#{msg['inventory.item.itemCode']}">  
+             <h:outputLabel  value="#{ts.itemDTO.itemCode}" />
+         </p:column>  
+  		
+         <p:column headerText="#{msg['inventory.item.itemName']}" style="width:20%">  
+            <h:outputLabel  value="#{ts.itemDTO.itemName}"/>  
+            
+        </p:column>  
+       
+         <p:column headerText="#{msg['inventory.item.itemQuantity']}">  
+            <h:outputLabel value="#{ts.quantity}" >
+            <f:convertNumber maxFractionDigits="1"></f:convertNumber>
+            </h:outputLabel> 
+        </p:column>  
+        
+         <p:column headerText="#{msg['inventory.item.itemPrice']}">  
+            <h:outputLabel value="#{ts.price}" />  
+        </p:column>  
+        
+        <p:column headerText="#{msg['inventory.openBalance.item.total']}">  
+            <h:outputLabel value="#{ts.price*ts.quantity}" >
+            <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+            </h:outputLabel> 
+             
+             <f:facet name="footer">
+             <h:outputLabel value="#{studyUpdateBean.total}" id="tot">
+             <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+             </h:outputLabel>
+             </f:facet>
+            
+        </p:column>  
+        
+          <p:column headerText="#{msg['app.study.discount']}">  
+            <p:selectBooleanCheckbox value="#{ts.have}" >
+             <p:ajax  listener="#{studyUpdateBean.discountAjax(ts)}" update="@this,:frm:tabView:dataTable:,:frm:messages:,:frm:tabView:qnt:,:frm:inTab:"/> 
+             </p:selectBooleanCheckbox>   
+        </p:column> 
+        
+        <p:column headerText="#{msg['delete']}"> 
+            <p:commandLink value="#{msg['delete']}" action="#{studyUpdateBean.delRow(ts)}" update=":frm:tabView:dataTable:,:frm:messages:,:frm:tabView:qnt:,:frm:inTab:"  ajax="true"></p:commandLink>
+        </p:column>  
+        
+    </p:dataTable>  
+        
+        
+        
+      <p:panelGrid columns="4" layout="grid">
+        <h:outputLabel value="#{msg['app.study.technican.name']}" />  
+
+        <p:selectOneMenu value="#{studyUpdateBean.technicalRow}" style="height:30px;" converter="updateTechnicalConverter" requiredMessage="#{msg['app.study.technican.valid']}" filter="true" filterMatchMode="startsWith" > 
+        <f:selectItem itemLabel="#{studyUpdateBean.technicalRow.technicalName}"></f:selectItem>
+         <f:selectItems value="#{studyUpdateBean.technicalList}" var="t" itemLabel="#{t.technicalName}" itemValue="#{t}" ></f:selectItems>
+         <p:ajax listener="#{studyUpdateBean.changeTechnical}" event="itemSelect"></p:ajax>
+        </p:selectOneMenu>  
+       
+        <h:outputLabel value="#{msg['app.study.date']}" />
+
+        <p:calendar value="#{studyUpdateBean.studyDate}"  requiredMessage="#{msg['app.study.date.valid']}" />
+
+        </p:panelGrid>
+        </p:outputPanel>
+  	</p:tab>
+    <p:tab id="tab1" title="#{msg['app.study.budget.fieldset.studyCalculate']}">  
+    
+    <p:outputPanel styleClass="gridMinHieght">
+    <p:card>
+    <f:facet name="title">#{msg['app.study.budget.fieldset.studyCalculate']}</f:facet>
+     
+     	<p:panelGrid layout="grid" columns="3">
+     	
+        <h:outputLabel value="#{msg['app.study.totalParcial']}" ></h:outputLabel>
+       	<h:outputLabel></h:outputLabel>
+        <h:outputLabel value="#{studyUpdateBean.totParcial}" id="tp">
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+
+
+        <h:outputLabel value="#{msg['app.study.tax']}" ></h:outputLabel>
+        <h:outputLabel></h:outputLabel>
+        <h:outputLabel></h:outputLabel>
+        
+       	<h:outputLabel value="#{msg['app.study.previsiones']}" ></h:outputLabel>
+       	<h:outputLabel value="8.5%" />
+       	<h:outputLabel value="#{studyUpdateBean.pervisonVarias}" id="pv">
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+      
+        
+        <h:outputLabel value="#{msg['app.study.studies']}" ></h:outputLabel>
+        <h:outputLabel value="30%" />
+        <h:outputLabel value="#{studyUpdateBean.studCharge}" id="sc">
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        
+        
+        <h:outputLabel value="#{msg['app.study.discount']}" ></h:outputLabel>
+        <h:outputLabel></h:outputLabel>
+        <h:outputLabel value="#{studyUpdateBean.discount}" id="dis">
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        
+        <h:outputLabel value="#{msg['app.study.totalInFCFAS']}" ></h:outputLabel>
+        <h:outputLabel></h:outputLabel>
+        <h:outputLabel value="#{studyUpdateBean.totalInFCFA}" id="tif">
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        
+        
+        
+        <h:outputLabel value="#{msg['app.study.ICNI']}" ></h:outputLabel>
+        <h:outputLabel value="15%" />
+        <h:outputLabel value="#{studyUpdateBean.icni}" id="icni">
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        
+         <h:outputLabel value="#{msg['app.study.subTotalApagerInFCFAS']}" ></h:outputLabel>
+         <h:outputLabel></h:outputLabel>
+         <h:outputLabel value="#{studyUpdateBean.subTotal}" id="subT">
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        
+        <h:outputLabel value="#{msg['app.study.accommudation']}" ></h:outputLabel>
+        <h:outputLabel value="21250" >
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        <p:panelGrid layout="grid" columns="2">
+	        <h:outputLabel value="1"  style="color:red"/>
+	        <h:outputLabel value="#{studyUpdateBean.accommdateTax}" id="accMo">
+	        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        </p:panelGrid>
+        
+        
+        <h:outputLabel value="#{msg['app.study.commercial']}" ></h:outputLabel>
+        <h:outputLabel value="40000" >
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        <p:panelGrid layout="grid" columns="2">
+	        <h:outputLabel value="0"  style="color:red"/>
+	        <h:outputLabel value="#{studyUpdateBean.commerical}" id="commer">
+	        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+	        </h:outputLabel>
+       </p:panelGrid>
+       
+        
+        <h:outputLabel value="#{msg['app.study.mediaTension']}" ></h:outputLabel>
+        <h:outputLabel value="180000" >
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        <p:panelGrid layout="grid" columns="2">
+	        <h:outputLabel value="0"  style="color:red"/>
+	        <h:outputLabel value="#{studyUpdateBean.mediaTension}" id="mTen">
+	        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+	        </h:outputLabel>
+        </p:panelGrid>
+        
+              
+        <h:outputLabel value="#{msg['app.study.changeLocationCharge']}" ></h:outputLabel>
+        <h:outputLabel value="2500" >
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        <p:panelGrid layout="grid" columns="2">
+	        <h:outputLabel value="0"  style="color:red"/>
+	        <h:outputLabel value="#{studyUpdateBean.changeCharge}" id="cc">
+	        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+	        </h:outputLabel>
+        </p:panelGrid>
+        
+        <h:outputLabel value="#{msg['app.study.companyCharge']}" ></h:outputLabel>
+        <h:outputLabel value="2500" >
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        <p:panelGrid layout="grid" columns="2">
+	        <h:outputLabel value="0"  style="color:red"/>
+	        <h:outputLabel value="#{studyUpdateBean.companyCharge}" id="comCh" >
+	        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+	        </h:outputLabel>
+        </p:panelGrid>
+        
+        <h:outputLabel value="#{msg['app.study.totalPagarInFCFAS']}" ></h:outputLabel>
+        <h:outputLabel></h:outputLabel>
+       
+        <h:outputLabel value="#{studyUpdateBean.totalbudget}" id="tb">
+        <f:convertNumber maxFractionDigits="2"></f:convertNumber>
+        </h:outputLabel>
+        
+        </p:panelGrid>
+        </p:card>
+        </p:outputPanel>
+        
+        </p:tab>
+ 
+     <p:tab id="tab2" title="#{msg['app.study.budget.fieldset.certificateOfProject']}">  
+        <p:outputPanel styleClass="gridMinHieght">
+        <p:card>
+        	<f:facet name="title">#{msg['app.study.budget.fieldset.certificateOfProject']}</f:facet>
+	        <p:panelGrid layout="grid" columns="2" columnClasses="ui-g-10 ui-md-6 ui-lg-4, ui-g-2 ui-md-6 ui-lg-2">
+		        <h:outputLabel value="#{msg['app.study.new']}" />  
+		     
+		        <p:selectBooleanCheckbox value="#{studyUpdateBean.model.chkNew}" />  
+		     
+		        <h:outputLabel value="#{msg['app.study.old']}" />
+		         
+		        <p:selectBooleanCheckbox value="#{studyUpdateBean.model.chkOld}" />
+		        
+		        <h:outputLabel value="#{msg['app.study.currentlyHasEnergy']}" />
+		          
+		        <p:selectBooleanCheckbox value="#{studyUpdateBean.model.currentlyHasEnergy}" />
+		        
+		         <h:outputLabel value="#{msg['app.study.neverHadLight']}" />
+		          
+		        <p:selectBooleanCheckbox  value="#{studyUpdateBean.model.neverHadLight}"/>
+		        
+		        <h:outputLabel value="#{msg['app.study.workConnection']}" /> 
+		         
+		        <p:selectBooleanCheckbox value="#{studyUpdateBean.model.workConnection}" />
+       
+        </p:panelGrid>
+        </p:card>
+        </p:outputPanel>
+        </p:tab>
+        
+        <p:tab id="tab3" title="#{msg['app.study.budget.fieldset.technicObvervation']}"> 
+         <p:outputPanel styleClass="gridMinHieght">
+         <p:card>
+         	<f:facet name="title">#{msg['app.study.budget.fieldset.technicObvervation']}</f:facet> 
+         	<br/>
+         	
+        	<p:divider type="dashed">  #{msg['app.study.budget.fieldset.install']} </p:divider>
+        		<p:panelGrid columns="1" layout="grid">
+			         <p:selectOneRadio  id="lineDirection1" value="#{studyUpdateBean.model.internalInstallationType}">  
+			            <f:selectItem itemLabel="#{msg['app.study.good']}" itemValue="1" />  
+			            <f:selectItem itemLabel="#{msg['app.study.doesNotGatherConnection']}" itemValue="2" />  
+			            <f:selectItem itemLabel="#{msg['app.study.notSet']}" itemValue="0" />  
+			        </p:selectOneRadio>  
+         		  </p:panelGrid>
+         <br/>
+        <p:divider type="dashed">#{msg['app.study.budget.fieldset.accessComm']}</p:divider>
+       
+        <p:panelGrid columns="1" layout="grid">
+			        <p:selectOneRadio style="width:90%"  id="lineDirection2"  value="#{studyUpdateBean.model.accessType}">  
+			            <f:selectItem itemLabel="#{msg['app.study.good']}" itemValue="1" />  
+			            <f:selectItem itemLabel="#{msg['app.study.difficult']}" itemValue="2" />  
+			            <f:selectItem itemLabel="#{msg['app.study.notSet']}" itemValue="0" />  
+			        </p:selectOneRadio> 
+        </p:panelGrid>
+        <br/>
+         <p:divider type="dashed">#{msg['app.study.budget.fieldset.possiblity']}</p:divider>
+        <p:panelGrid columns="1" layout="grid">
+         <p:selectOneRadio style="width:90%" id="lineDirection3" value="#{studyUpdateBean.model.possibilityType}">  
+            <f:selectItem itemLabel="#{msg['app.study.acceptable']}" itemValue="1" />  
+            <f:selectItem itemLabel="#{msg['app.study.difficult']}" itemValue="2" />  
+            <f:selectItem itemLabel="#{msg['app.study.notSet']}" itemValue="0" />  
+        </p:selectOneRadio> 
+         </p:panelGrid>
+         
+        </p:card>
+        </p:outputPanel>
+        </p:tab>
+        </p:tabView>
+        </p:outputPanel>
+        
+    <f:facet name="footer">
+    <p:panelGrid layout="grid" columns="4"> 
+    <p:commandButton  value="#{msg['update']}" icon="ui-icon-disk" style=" font-weight:bold;font-size:11px;" 
+        update="@form" ajax="true" action="#{studyUpdateBean.update}"  >
+        <p:confirm header="Confirmation" message="#{msg['cofm']}" icon="ui-icon-alert" /> 
+        </p:commandButton>
+         <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+    </p:confirmDialog> 
+         
+        <p:commandButton  icon="ui-icon-print" style=" font-weight:bold;font-size:11px;" id="cmdPrint" value="#{msg['print']}" actionListener="#{budget.printStudProject}" disabled="#{budget.printFlag}" ajax="false" update="@form">
+    		</p:commandButton>
+
+    	<p:commandButton value="#{msg['cancel']}"
+											action="#{studyUpdateBean.cancel}"   ajax="false"></p:commandButton>
+  </p:panelGrid>
+  
+    </f:facet> 
+
+    
+    </p:card>
+    </b:column>
+    </b:row>
+    </b:container>
+    
+    </h:form>  
+    </div>
+</ui:define>
+</ui:composition>
+
+</body>
+	
+</html>

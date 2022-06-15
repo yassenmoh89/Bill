@@ -1,0 +1,197 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" 
+	xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<h:outputStylesheet library="css" name="style.css"></h:outputStylesheet>
+<h:outputStylesheet library="css" name="accessDen.css"></h:outputStylesheet>
+
+<style type="text/css">
+	.clip {
+	background-color: green;
+	clip-path: polygon(0% 0%, 0% 100%, 25% 100%, 25% 25%, 75% 25%, 75% 75%, 25% 75%, 25% 100%, 100% 100%, 100% 0%);
+	}
+	
+body .ui-messages {
+  padding-left: 25%;
+  padding-right:25%;
+  padding-top:50px;
+  margin: 0;
+  font-weight: 600;
+  position: relative;
+  border-radius: 4px;
+  font-size: 15px;
+}
+
+body .ui-messages .ui-messages-error .ui-messages-error-icon, body .ui-messages .ui-messages-error .ui-messages-fatal, body .ui-messages .ui-messages-fatal .ui-messages-error-icon, body .ui-messages .ui-messages-fatal .ui-messages-fatal {
+  font-family: 'primeicons' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  display: inline-block;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-indent: 0 !important;
+  background-image: none !important;
+  margin: 1 2.8rem 2 2;
+  color: #B71C1C;
+}
+
+.ui-card-header img {
+  width: 70%;
+  padding-left: 30%;
+}
+
+body .ui-card .ui-card-title {
+  font-size: 2.2rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  padding-left: 5px;
+  color: #93a493;
+}
+
+body .ui-panelgrid .ui-panelgrid-cell {
+  color: #919599;
+}
+
+body .ui-card {
+  background: #ffffff;
+  color: #495057;
+  box-shadow: 0 2px 1px -1px rgba(115, 100, 100, 0.7), 0 1px 1px 0 rgba(49, 44, 44, 0.7), 0 1px 3px 0 rgba(159, 152, 152, 0.67);
+  border-radius: 4px;
+}
+
+body .ui-button, button.ui-button.ui-state-default, .ui-button.ui-state-default
+	{/*168dd9 059eff*/
+	border: 1px solid #607D8B;
+	border-radius: 4px;
+	color: #fff;;
+	background: #607D8B;
+	width: 80%;
+	font-size: 15px;
+	font-weight: bold;
+	margin-left: 8%;
+}
+
+.loginPadding {
+	padding-top: 100px;
+}
+
+@media screen and (max-width: 1100px) {
+body .ui-messages {
+  padding-left: 3%;
+  padding-right:3%;
+  }
+  
+  .loginPadding {
+	padding-top: 20px;
+}
+}
+
+@media screen and (min-width: 1150px) and (max-width: 1400px) {
+body .ui-messages {
+  padding-left: 25%;
+  padding-right:25%;
+  }
+  .loginPadding {
+	padding-top: 100px;
+}
+}
+
+</style>
+</h:head>
+<body>
+    <p:ajaxStatus onstart="PF('statusDialog').show()" onsuccess="PF('statusDialog').hide()"/>
+
+    <p:dialog widgetVar="statusDialog" modal="true" draggable="false"  closable="false" responsive="true" resizable="false" showHeader="false" style="padding-top: 15px;">
+        <p:card style="	border-radius: 20px;padding-top:15px;">
+        <h:graphicImage name="load4.gif" library="img" width="150" height="120"></h:graphicImage>
+        </p:card>
+    </p:dialog>
+				<h:form id="frm" prependId="false">
+					<p:messages id="messages" showDetail="true" closable="true"/>
+					
+						<b:row style="padding:10px;">
+							<b:column col-md="3">
+							</b:column>
+							<b:column col-md="6" styleClass="loginPadding">
+								
+								<p:card style="width:90%;margin-left: 6%;" styleClass="w3-animate-top">
+								<f:facet name="header">
+								<h:graphicImage name="sudajar.jpg" library="img" ></h:graphicImage>
+								</f:facet>
+								
+								<f:facet name="title">#{msg['user.label.login']} </f:facet>
+								<br/>
+							
+									<p:panelGrid columns="2" layout="grid"
+										styleClass="showcase-text-align-center"
+										columnClasses="ui-g-12 ui-md-4 ui-lg-4, ui-g-12 ui-md-8 ui-lg-8">
+
+										<h:outputLabel value="#{msg['user.name']}"></h:outputLabel>
+										<p:selectOneMenu value="#{loginBean.userId}">
+											<f:selectItem itemLabel="#{msg['se.common.select.one']}"></f:selectItem>
+											<f:selectItems  value="#{loginBean.userList}" var="usr" itemLabel="#{usr.userName}" itemValue="#{usr.userId}"></f:selectItems>
+										</p:selectOneMenu>
+
+										<h:outputLabel id="code" value="#{msg['user.passowrd']}" rendered="#{not loginBean.needChangePwd}"></h:outputLabel>
+										<p:password value="#{loginBean.password}" rendered="#{not loginBean.needChangePwd}"></p:password>
+										</p:panelGrid>
+										
+									<p:panelGrid columns="2" layout="grid" rendered="#{loginBean.needChangePwd}"
+											styleClass="showcase-text-align-center"
+											columnClasses="ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-8">
+										       	    <h:outputLabel value="#{msg['user.old.password']}" ></h:outputLabel>
+											        <p:password id="old" value="#{loginBean.currentPassword}">
+											        <p:watermark for="old" value="Current Password" />
+											        </p:password>
+											        
+											
+											        <h:outputLabel value="#{msg['user.new.password']}" ></h:outputLabel>
+											       <p:password id="new" value="#{loginBean.newPassword}"><p:watermark for="new" value="New Password" /></p:password>
+											
+											        <h:outputLabel value="#{msg['user.confirm.password']}" ></h:outputLabel>
+											        <p:password id="conf" value="#{loginBean.confirmPassword}"><p:watermark for="conf" value="Confirm Password" /></p:password>
+										
+									</p:panelGrid>
+
+									
+							
+								<br/>
+								<br/>
+								
+									<p:panelGrid layout="grid" columns="2" columnClasses="ui-g-6 ui-md-6 ui-lg-6, ui-g-6 ui-md-6 ui-lg-6">
+										<p:commandButton action="#{loginBean.doLogin}" rendered="#{not loginBean.needChangePwd}"
+											value="#{msg['user.label.login']}" update="@form"></p:commandButton>
+											
+									 <p:commandButton value="#{msg['update']}" rendered="#{loginBean.needChangePwd}" action="#{loginBean.changePassword}" update="frm"></p:commandButton>
+											
+										<p:commandButton action="#{roleBean.reset}" 
+											value="#{msg['reset']}"></p:commandButton>
+									</p:panelGrid>
+								</p:card>
+								
+							</b:column>
+						<b:column col-md="3">
+						</b:column>
+						
+						</b:row>
+				
+
+
+				</h:form>
+	
+
+</body>
+
+</html>

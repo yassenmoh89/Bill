@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+										
+											<p:card styleClass="gridMinHieght">
+												<f:facet name="title">#{msg['app.contract.moreInfo.fieldset']}</f:facet>
+												<p:panelGrid columns="2" layout="grid"
+													styleClass="showcase-text-align-center"
+													columnClasses="ui-g-4 ui-md-6 ui-lg-2, ui-g-8 ui-md-6 ui-lg-10">
+
+													<p:selectBooleanCheckbox value="#{contractBean.model.tenant}" />
+													<h:outputLabel value="#{msg['app.contract.tenant']}">
+													</h:outputLabel>
+
+													<p:selectBooleanCheckbox value="#{contractBean.model.authority}" />
+													<h:outputLabel value="#{msg['app.contract.authority']}"></h:outputLabel>
+													
+													
+													
+													<p:selectBooleanCheckbox value="#{contractBean.model.interlConsumption}" />
+													<h:outputLabel
+														value="#{msg['app.contract.interalConsumption']}"></h:outputLabel>
+														
+														
+													<p:selectBooleanCheckbox value="#{contractBean.model.exonerado}" />
+													<h:outputLabel value="#{msg['app.contract.exonerado']}"></h:outputLabel>
+													
+													
+													<p:selectBooleanCheckbox value="#{contractBean.model.exemptPenality}" />
+													<h:outputLabel value="#{msg['app.contract.freePenalization']}"></h:outputLabel>
+													
+													<p:selectBooleanCheckbox
+														value="#{contractBean.model.invoicePaymentOrder}" />
+													<h:outputLabel value="#{msg['app.contract.freePayment']}"></h:outputLabel>
+													
+													
+													<p:selectBooleanCheckbox value="#{contractBean.model.invoiceBillingOrder}" />
+													<h:outputLabel value="#{msg['app.contract.freeBillOrder']}"></h:outputLabel>
+													
+													<p:selectBooleanCheckbox style="bgcolor:#F0F0F0"  value="#{contractBean.model.subjectTocut}" />
+
+													<h:outputLabel value="#{msg['app.contract.cutEnergy']}"
+														style="font-color:red">
+													</h:outputLabel>
+
+												</p:panelGrid>
+											</p:card>
+										
+
+</html>

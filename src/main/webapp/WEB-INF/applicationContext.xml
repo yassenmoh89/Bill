@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xmlns:tx="http://www.springframework.org/schema/tx"
+xmlns:context="http://www.springframework.org/schema/context"
+xsi:schemaLocation="
+http://www.springframework.org/schema/beans
+http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+http://www.springframework.org/schema/context
+http://www.springframework.org/schema/context/spring-context-4.0.xsd
+http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
+
+<context:component-scan base-package="core.bill"/>
+<context:annotation-config/>
+<context:spring-configured/>
+
+<!--  Data Source Declaration -->
+
+<bean id="hikariConfig" class="com.zaxxer.hikari.HikariConfig">  
+      
+      		<property name="poolName" value="springHikariCP" />
+     		<property name="dataSourceClassName" value="com.microsoft.sqlserver.jdbc.SQLServerDataSource" />
+            <property name="maximumPoolSize" value="2" />
+            <property name="maxLifetime" value="1800000" />
+            <property name="idleTimeout" value="600000" />
+            <property name="connectionTimeout" value="60000" />
+            <property name="dataSourceProperties">
+                <props>
+                    <prop key="url">jdbc:sqlserver://172.16.1.19;databaseName=FuckingMalabo;</prop>
+                    <prop key="user">noor</prop>
+                    <prop key="password">_SudaJar***</prop>
+                    
+                  
+                </props>
+            </property>
+             
+ </bean>  
+    
+<bean id="DataSource"  class="com.zaxxer.hikari.HikariDataSource"  destroy-method="close">  
+          <constructor-arg ref="hikariConfig" /> 
+</bean>
+
+<!-- Session Factory Declaration -->
+<bean id="SessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+<property name="dataSource" ref="DataSource" />
+	<property name="annotatedClasses">
+		<list>
+		
+		<!-- start Commerical --> 
+		<value>core.bill.comercial.model.CustomerDTO</value>
+		<value>core.bill.comercial.model.ApplicationDTO</value>
+		<!-- Start Contract -->
+		<value>core.bill.comercial.model.ContractDTO</value>
+		
+		<!-- Start Invoice -->
+		<value>core.bill.invoice.model.InvoiceDTO</value>
+		<value>core.bill.invoice.model.ChargeDTO</value>
+		<value>core.bill.invoice.model.ReadingDTO</value>
+		<value>core.bill.invoice.model.PaymentDTO</value>
+		<value>core.bill.invoice.model.OtherPaymentDTO</value>
+		
+		<!-- start user management  -->
+		<value>core.bill.user.model.UserDTO</value>
+		<value>core.bill.user.model.UserProfileDTO</value>
+		<value>core.bill.user.model.RoleDTO</value>
+		<value>core.bill.user.model.ResourceDTO</value>
+		<value>core.bill.user.model.GroupDTO</value>
+		<value>core.bill.user.model.GroupResourceDTO</value>
+		<value>core.bill.user.model.GroupRoleDTO</value>
+		<value>core.bill.user.model.UserRoleDTO</value>
+		<value>core.bill.user.model.SystemConfig</value>
+		<!-- End user management -->
+		
+		<!-- Setting Start -->
+		<value>core.bill.setting.model.ApplicationPurposeTypeDTO</value>
+		<value>core.bill.setting.model.BillingTypeDTO</value>
+		<value>core.bill.setting.model.CircuitsDTO</value>
+		<value>core.bill.setting.model.ConnectionTypeDTO</value>
+		<value>core.bill.setting.model.ContractOwnerTypeDTO</value>
+		<value>core.bill.setting.model.ContractTypeDTO</value>
+		<value>core.bill.setting.model.HouseholdsDTO</value>
+		<value>core.bill.setting.model.IdentificationTypeDTO</value>
+		<value>core.bill.setting.model.InspectionDecisionTypeDTO</value>
+		<value>core.bill.setting.model.LocalityDTO</value>
+		<value>core.bill.setting.model.MeterStatusDTO</value>
+		<value>core.bill.setting.model.NationalityDTO</value>
+		<value>core.bill.setting.model.PaymentTypeDTO</value>
+		<value>core.bill.setting.model.PhaseDTO</value>
+		<value>core.bill.setting.model.PriceDTO</value>
+		<value>core.bill.setting.model.SectorDTO</value>
+		<value>core.bill.setting.model.ReceiverDTO</value>
+		<value>core.bill.setting.model.SupplyDTO</value>
+		
+		<value>core.bill.setting.model.TypeDTO</value>
+		<value>core.bill.setting.model.ContractPaymentDTO</value>
+		<value>core.bill.setting.model.ContractBillingDTO</value>
+		
+		<!-- start user study  -->
+		<value>core.bill.study.model.ItemsDTO</value>
+		<value>core.bill.study.model.StudyTechnicalDTO</value>
+		<value>core.bill.study.model.StudyApplicationDTO</value>
+		<value>core.bill.study.model.StudyApplicationDetailsDTO</value>
+			<value>core.bill.user.model.UserSessionDTO</value>
+		<!-- End Setting -->
+		
+		<!-- End Setting -->
+		
+		<!-- File Upload --> 
+		<value>core.bill.upload.model.UploadFileDTO</value>
+	</list>
+</property>
+<property name="hibernateProperties">
+<props>
+<prop key="hibernate.show_sql">true</prop>
+<prop key="hibernate.format_sql">true</prop>
+<prop key="hibernate.hbm2ddl.auto">update</prop>
+<prop key="hibernate.dialect">org.hibernate.dialect.SQLServer2008Dialect</prop>
+</props>
+</property>
+</bean>
+
+<!-- Enable the configuration of transactional behavior based on annotations -->
+<tx:annotation-driven transaction-manager="txManager"/>
+
+<!-- Transaction Manager is defined  -->
+
+<bean id="txManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+<property name="sessionFactory" ref="SessionFactory"/>
+</bean>
+
+</beans>

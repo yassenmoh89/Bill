@@ -1,0 +1,74 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui" 
+       xmlns:b="http://bootsfaces.net/ui">
+       
+       <h:head>
+       
+       </h:head>
+<body>
+<ui:composition  template="/WEB-INF/template/layout.xhtml">
+<ui:define name="body" >
+<div>
+<h:form id="frm" prependId="false">
+ <p:growl id="messages"  />  
+<b:container >
+<b:row styleClass="myRow">
+<b:column col-md="12">
+<br/>
+     <p:card>
+       	<f:facet name="title">#{msg['user.label.reset.password']} </f:facet>
+     </p:card>
+     <p:divider></p:divider>
+     <p:card>
+       	<p:panelGrid columns="2" layout="grid" styleClass="showcase-text-align-center" 
+		 columnClasses="ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-8" >
+
+        <h:outputLabel value="#{msg['user.name']}" ></h:outputLabel>
+        <p:inputText></p:inputText>
+        
+        
+        <h:outputLabel value="#{msg['user.code']}" ></h:outputLabel>
+        <p:inputText></p:inputText>        
+
+       <h:outputLabel value="#{msg['user.status']}" ></h:outputLabel>
+        <p:selectOneRadio id="console"  unselectable="false">
+            <f:selectItem itemLabel="#{msg['user.status.active']}" itemValue="1"/>
+            <f:selectItem itemLabel="#{msg['user.status.active']}" itemValue="2"/>
+        </p:selectOneRadio>
+              
+        </p:panelGrid>
+        
+        </p:card>
+        <p:divider></p:divider>
+         <p:card>
+        <f:facet name="footer">
+        <p:panelGrid layout="grid" columns="4">
+        <p:commandButton value="#{msg['update']}"></p:commandButton>
+        <p:commandButton value="#{msg['cancel']}"></p:commandButton>
+        </p:panelGrid>
+        </f:facet>
+ 
+       </p:card>
+        
+        
+
+   
+    </b:column>
+    </b:row>
+    </b:container>
+    
+    
+    </h:form>  
+    </div>
+</ui:define>
+</ui:composition>
+
+</body>
+	
+</html>

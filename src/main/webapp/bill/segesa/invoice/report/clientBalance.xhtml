@@ -1,0 +1,182 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/WEB-INF/template/layout.xhtml">
+		<ui:define name="body">
+		<div>
+			<h:form id="frm" prependId="false">
+		    <p:growl id="messages" showDetail="true"/>
+				<b:container style="width:80%">
+				<b:row styleClass="myRow">
+				<b:column col-md="12">
+				
+								<p:card>
+				<p:panelGrid columns="4" layout="grid">
+
+											<h:outputLabel value="#{msg['app.contract.no']}"
+													style="font-size:20px;text-align:left;" />
+
+											<p:inputText value="#{invoiceReport.contractId}"
+													autocomplete="off" style="font-weight:bold;font-size:20px"
+													onkeypress="if (event.keyCode == 13) { tata(); return false;}">
+												</p:inputText> <p:remoteCommand name="tata" update="allInfo "
+													actionListener="#{invoiceReport.searchcontract}"></p:remoteCommand>
+
+				</p:panelGrid>
+				</p:card>
+				<p:divider></p:divider>
+				<p:card>
+									<p:tabView id="allInfo">
+									<p:tab title="#{msg['app.fieldset.clientInformation']}">
+									<p:panelGrid id="allInfo2" columns="4" layout="grid" columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4,ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4">
+											
+											<h:outputLabel value="#{msg['app.customerName']}"
+														></h:outputLabel>
+										    <p:inputText id="cusnam"
+														value="#{invoiceReport.contractDto.customerDTO.customerName}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+										
+										<h:outputLabel
+														value="#{msg['inv.invoice.location']}" ></h:outputLabel>
+												<p:inputText id="lnam"
+														value="#{invoiceReport.contractDto.localityDTO.description}" 
+														readonly="true">
+													</p:inputText>
+												<h:outputLabel value="#{msg['app.address']}"
+														></h:outputLabel>
+												<p:inputText value="#{invoiceReport.contractDto.direction}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+
+											   <h:outputLabel
+														value="#{msg['inv.invoice.cutomerNumber']}"
+														></h:outputLabel>
+											<p:inputText value="#{invoiceReport.contractDto.customerDTO.customerId}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+											<h:outputLabel
+														value="#{msg['inv.invoice.contractNumber']}"
+														></h:outputLabel>
+										    <p:inputText value="#{invoiceReport.contractDto.contractId}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+											
+										<h:outputLabel
+														value="#{msg['inv.invoice.meterNumber']}"
+														></h:outputLabel>
+										  <p:inputText value="#{invoiceReport.contractDto.meterNumber}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+										  <h:outputLabel value="#{msg['inv.invoice.fase']}"
+														></h:outputLabel>
+										  <p:inputText value="#{invoiceReport.contractDto.phaseDTO.description}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+										<h:outputLabel value="#{msg['inv.invoice.stats']}"
+														></h:outputLabel>
+										<p:inputText value="#{invoiceReport.contractDto.meterStatusDTO.description}"
+														style="width:100px;background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+
+									    <h:outputLabel value="#{msg['inv.invoice.iguala']}"
+														style="width:30px"></h:outputLabel>
+										<p:selectBooleanCheckbox id="igual"
+														value="#{invoiceReport.contractDto.iguala}" disabled="true"
+														>
+													</p:selectBooleanCheckbox>
+
+										<h:outputLabel value="#{msg['inv.invoice.type']}"
+														style="width:30px"></h:outputLabel>
+										<p:inputText id="tnam" value="#{invoiceReport.contractDto.typeDTO.description}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+
+
+										<h:outputLabel
+														value="#{msg['inv.invoice.fixedAmount']}"
+														></h:outputLabel>
+										<p:inputText value="#{invoiceReport.contractDto.fixedPriceValue}"
+														style="width:50px;background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+								
+										<h:outputLabel
+														value="#{msg['inv.invoice.circuitNumber']}"
+														></h:outputLabel>
+										  <p:inputText value="#{invoiceReport.contractDto.circuitoNum}"
+														style="background-color:#ECFAFA"
+														readonly="true">
+													</p:inputText>
+
+								</p:panelGrid>
+								
+								</p:tab>
+								</p:tabView>
+								
+								</p:card>
+								
+									<p:divider></p:divider>	
+									
+								<p:card>
+									
+									<p:panelGrid layout="grid" columns="2">
+											<p:selectOneRadio  id="console" value="#{invoiceReport.repTemplete}" unselectable="true">
+									            <f:selectItem itemLabel="#{msg['report.invoice.show.all']}" itemValue="ALL"/>
+									            <f:selectItem itemLabel="#{msg['report.invoice.show.unpaid']}" itemValue="UNPAID"/>
+									            <f:selectItem itemLabel="#{msg['report.invoice.show.paid']}" itemValue="PAID"/>
+									            <p:ajax event="valueChange" update="@form" listener="#{invoiceReport.onReportOptionSelected}"></p:ajax>
+									        </p:selectOneRadio>
+										</p:panelGrid>	
+								<p:outputPanel rendered="#{invoiceReport.showReportDate}" id="grd">				
+									<p:panelGrid  layout="grid" columns="4" 
+									columnClasses="ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-4 ui-lg-4,ui-g-6 ui-md-4 ui-lg-2,ui-g-6 ui-md-4 ui-lg-4">
+										
+											<h:outputLabel value="#{msg['rep.dateFrom']}"></h:outputLabel>
+		 									<p:calendar value="#{invoiceReport.fromDate}" mask="true" pattern="dd-MM-yyyy"></p:calendar>
+		 		
+		 									<h:outputLabel value="#{msg['rep.dateTo']}"></h:outputLabel>
+		 									
+		 									<p:calendar value="#{invoiceReport.toDate}" mask="true" pattern="dd-MM-yyyy"></p:calendar>
+
+										</p:panelGrid>
+								</p:outputPanel>
+									<f:facet name="footer">
+													<p:commandButton value="#{msg['re.showReport']}"
+														action="#{invoiceReport.clientBalance}" 
+														update="@form,:frm:messages:" ajax="false">
+										</p:commandButton>
+									</f:facet>
+								</p:card>
+								<p:divider></p:divider>
+
+							
+					</b:column>
+				</b:row>
+			</b:container>
+			</h:form>
+</div>
+		</ui:define>
+	</ui:composition>
+
+</body>
+
+</html>

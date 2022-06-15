@@ -1,0 +1,117 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+<h:head>
+
+</h:head>
+<body>
+	<ui:composition template="/WEB-INF/template/layout.xhtml">
+		<ui:define name="body">
+		<f:metadata>
+    		<f:viewParam name="updateKey" value="#{othPayment.updateKey}" />
+    		<f:viewAction action="#{othPayment.loadNewContract}" />
+		</f:metadata>
+			<div>
+				<h:form id="frm" prependId="false">
+					<p:messages id="messages" showDetail="true" closable="true">
+						<p:autoUpdate />
+					</p:messages>
+
+					<b:container>
+						<b:row styleClass="myRow">
+
+
+							<b:column col-md="12">
+								<p:card>
+									<f:facet name="title">#{msg['menu.invoice.otherPayment']} </f:facet>
+									<p:tabView id="tab1" style="width:100%">
+										<p:tab title="#{msg['app.contract.client.info']}">
+											<ui:include src="contractGenernalEdit.xhtml"></ui:include>
+										</p:tab>								
+
+									</p:tabView>
+									<p:panelGrid layout="grid" columns="6" 
+									columnClasses="ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-4, ui-g-12 ui-md-6 ui-lg-2, ui-g-12 ui-md-6 ui-lg-2">
+									
+									<h:outputLabel value="#{msg['inv.invoice.pre.category']}"></h:outputLabel>
+									
+									<p:selectOneMenu  value="#{othPayment.chargeDto}" style="width:100%" filter="true" filterMatchMode="startsWith" converter="chargeConverter">
+							       	 <f:selectItems value="#{othPayment.chargeList}" var="c" itemValue="#{c}" itemLabel="#{c.description}"></f:selectItems>
+							       	 <p:ajax event="change"  update="amot"></p:ajax>
+							        </p:selectOneMenu>
+        							
+        							
+        							<p:inputText value="#{othPayment.chargeDto.amount}" id="amot" >
+        									<f:convertNumber maxFractionDigits="0"></f:convertNumber>
+        							</p:inputText>
+        							        
+       							 <p:commandButton action="#{othPayment.addInvoice}" ajax="true" update="dt" value="#{msg['inv.invoice.makeInvoice']}">
+									</p:commandButton>
+									
+								  <p:commandButton action="#{othPayment.printOtherPayBill}" id="prnt" ajax="false" rendered="#{othPayment.printFlag}" update="@form" value="#{msg['print']}">
+        							</p:commandButton>
+									</p:panelGrid>
+									
+									<p:dataTable value="#{othPayment.otherPaymentList}" var="c" id="dt"
+									rowStyleClass="#{c.paymentStatus eq 'ture' ? 'unpaid' : 'paid' }" 
+									selectionMode="single" selection="#{othPayment.selectedInvoice}" rowKey="#{c.otherPaymentId}">
+									 <p:ajax event="rowSelect" listener="#{othPayment.onSelected}"  update="@form"/>
+
+										<p:column  headerText="#{msg['inv.invoice.pre.transID']}" style="width:15%" >
+										<h:outputLabel value="#{c.otherPaymentId}"></h:outputLabel>
+										</p:column>
+										
+										<p:column headerText="#{msg['inv.invoice.pre.category']}" style="width:40%">
+										<h:outputLabel value="#{c.chargeDTO.description}"></h:outputLabel>
+										</p:column>
+	
+										<p:column headerText="#{msg['inv.invoice.pre.amount']}">
+										<h:outputLabel value="#{c.total}">
+										<f:convertNumber maxFractionDigits="1" pattern="#,###.#"></f:convertNumber>
+										</h:outputLabel>
+										</p:column>
+										
+										<p:column headerText="#{msg['date']}" >
+										<h:outputLabel value="#{c.createdDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" ></f:convertDateTime>
+										</h:outputLabel>
+										</p:column>
+										
+										<p:column headerText="#{msg['date']}">
+										<h:outputLabel value="#{c.paidDate}">
+										<f:convertDateTime pattern="dd/MM/yyyy" ></f:convertDateTime>
+										</h:outputLabel>
+										</p:column>
+													
+										<p:column>
+										   <p:outputPanel rendered="#{c.paymentStatus}">
+									        <i  class="pi pi-check-circle" style="font-size: 18px;color:green" ></i>
+									        </p:outputPanel>
+									        
+										</p:column>		
+													
+									</p:dataTable>
+
+								</p:card>
+								<p:divider></p:divider>
+
+							</b:column>
+
+							
+						</b:row>
+					</b:container>
+
+				</h:form>
+			</div>
+		</ui:define>
+	</ui:composition>
+
+</body>
+
+</html>

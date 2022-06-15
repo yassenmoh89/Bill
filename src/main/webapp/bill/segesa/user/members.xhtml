@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui" xmlns:b="http://bootsfaces.net/ui">
+
+
+       <p:dataTable  id="tbl-members" var="usr"  
+										value="#{groupUpdateBean.userRole}" 
+										paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {Exporters}"
+										paginator="true" rows="10" styleClass="p-mt-2"  rowIndexVar="rowIndex">
+		
+	<p:column headerText="#" style="width:8%">
+       <h:outputLabel value="#{rowIndex+1}"></h:outputLabel>
+       </p:column>
+										
+       <p:column headerText="#{msg['user.name']}" style="width:30%">
+			<h:outputLabel value="#{usr.userName}" />
+       </p:column>
+       
+       <p:column headerText="#{msg['user.code']}"  style="width:10%">
+        <h:outputLabel value="#{usr.userCode}"></h:outputLabel>
+       </p:column>
+       
+       <p:column headerText="#{msg['user.status']}" style="width:10%">
+        <p:outputPanel rendered="#{usr.active}">
+        <i  class="pi pi-check-circle" style="font-size: 18px;color:green" ></i>
+        </p:outputPanel>
+        
+        <p:outputPanel rendered="#{not usr.active}">
+        <i  class="pi pi-minus-circle" style="font-size: 18px;color:orange;" ></i>
+        </p:outputPanel>
+       </p:column>
+       
+      
+      
+       </p:dataTable>
+
+
+
+
+</html>

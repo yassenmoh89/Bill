@@ -1,0 +1,250 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+       xmlns:p="http://primefaces.org/ui" 
+       xmlns:b="http://bootsfaces.net/ui">
+       
+       <h:head>
+       
+       </h:head>
+<body>
+<ui:composition  template="/WEB-INF/template/layout.xhtml">
+<ui:define name="body" >
+<div>
+<h:form id="frm" prependId="false">
+ <p:growl id="messages"  />  
+ 
+ <b:container style="width:80%">
+<b:row styleClass="myRow">
+<b:column col-md="12">
+
+<p:focus context="pa"/>
+
+
+<p:card id="pa">
+<f:facet name="title">#{msg['inv.invoice.fixedInvoices']}</f:facet>
+
+ 
+    <p:panelGrid layout="grid" columns="4">  
+
+  		<h:outputLabel  value="#{msg['se.local.localName']}" />
+
+	    <p:selectCheckboxMenu label="Localidad" id ="loc" value="#{iqualaBean.selectedLocality}" style="width:215px;" filter="true" filterMatchMode="startsWith">
+	  	<f:selectItems value="#{iqualaBean.locationList}" var="o" itemValue="#{o.localityId}" itemLabel="#{o.description} "></f:selectItems>
+	  	<p:ajax event="change" update="year" ></p:ajax>
+	  	<p:ajax event="change" update="@this,dataTable,rd,ct,nt,btn" listener="#{fixedInvoices.searchIguala}"></p:ajax>
+  		 <p:ajax event="change" update="btn" ></p:ajax> 	
+	  	</p:selectCheckboxMenu> 
+
+	  	<h:outputLabel value="#{msg['inv.invoice.year']}" />
+
+	     <p:inputText value="#{fixedInvoices.year}" > 
+	    	  <p:ajax event="blur" update="@this" ></p:ajax></p:inputText>
+	
+	  		<h:outputLabel id="year" value="#{msg['inv.invoice.month']}" />
+
+	    	 <p:inputText  value="#{fixedInvoices.month}"  > 
+	    	 <p:ajax event="blur" update="@this,dataTable,invo" listener="#{fixedInvoices.searchList()}"></p:ajax></p:inputText>
+
+	  		<h:outputLabel value="#{msg['inv.invoice.totofiguala']}" />
+
+	  		<h:outputLabel id="ct"  value="#{fixedInvoices.totContract}" style="background:#ECFAFA;" /> 
+
+	  		<h:outputLabel value="#{msg['inv.invoice.totalofCutt']}" />
+
+	    	 <h:outputLabel id="nt" value="#{fixedInvoices.totNotRead}"  /> 
+
+	  		<h:outputLabel value="#{msg['inv.invoice.totalofAvilable']}" />
+
+	    	 <h:outputLabel id="rd" value="#{fixedInvoices.totReading}" /> 
+
+	  		<h:outputLabel value="#{msg['inv.invoice.haveInvoice']}" />
+
+	    	 <h:outputLabel id="invo" value="#{fixedInvoices.haveInvoice}" /> 
+
+        
+    <p:commandButton id="btn"  action="#{fixedInvoices.addFiexdInvoice}" disabled="#{fixedInvoices.flag}" update="@form,:frm:dataTable:,messages" value="#{msg['add']}" icon="ui-icon-disk" style="margin:0,font-size:15px;">  
+					<p:confirm header="Confirmation" message="#{msg['cofm']}" icon="ui-icon-alert" /> 
+	</p:commandButton>
+        
+        <p:confirmDialog global="true" showEffect="fade" hideEffect="explode">  
+        <p:commandButton value="Yes" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check"/>  
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close"/>       
+    </p:confirmDialog>  
+   
+   
+</p:panelGrid> 
+
+    	  <p:ajaxStatus   id="ajaxStatusPanel" >
+ 				<f:facet name="start">
+                   <h:graphicImage library="img"   name="pbar-ani.gif" width="100%" height="30" ></h:graphicImage>
+                </f:facet>
+
+                <f:facet name="complete">
+                    
+                </f:facet>
+ 			</p:ajaxStatus>  
+
+<p:dataTable  id="dataTable" rows="100" var="invoice1" value="#{fixedInvoices.invoiceList}" 
+ style=" font-weight:bold;font-size:12px;text-align:center;margin:0 auto;direction: ltr;"
+ rowStyleClass="#{invoice1.payed eq 'ture' ? 'unpaid' : 'paid' }"
+ rowKey="#{invoice1.facturaID}"  paginator="true"
+                 selection="#{invoice.invoiceRow}" selectionMode="single"
+  >  
+      <p:ajax event="rowSelect" listener="#{invoice.selectRow}" 
+        update="@this"></p:ajax>    
+       
+      <p:column headerText="#{msg['cash.comp.invoice']}">
+      <h:outputText value="#{invoice1.invoiceId}"></h:outputText>
+      </p:column>
+  
+        <p:column> 
+             <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.year']}" style="width:10px" />  
+            </f:facet>  
+            <h:outputText  value="#{invoice1.year}" style="width:10px" />
+              
+            
+        </p:column>  
+  		 <p:column>  
+            <f:facet name="header">  
+                <h:outputText  value="#{msg['inv.invoice.month']}" />  
+            </f:facet>  
+            <h:outputText  value="#{invoice1.month}"/>  
+        </p:column>  
+         <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.reading']}" />  
+            </f:facet>  
+            <h:outputText  value="#{invoice1.reading}">  
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText>
+        </p:column>  
+       
+         <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.lChange']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.readingChange}" >
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber>
+            </h:outputText>  
+        </p:column>  
+        
+         <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.consumption']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.consum}"> 
+            <f:convertNumber maxFractionDigits="1"></f:convertNumber>
+            </h:outputText> 
+        </p:column>  
+        
+        <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.price']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.price}" >
+            </h:outputText> 
+        </p:column>  
+        
+        <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.total']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.total}" > 
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText>
+                 </p:column>  
+      
+       <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.discount%']}" />  
+            </f:facet>  
+            <h:outputText  value="#{invoice1.discountPercent}" >
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText>
+              
+            </p:column>  
+  		
+         <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.discount']}" />  
+            </f:facet>  
+            <h:outputText  value="#{invoice1.discountValue}">
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText>  
+        </p:column>  
+       
+        <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.power']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.power}" >
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText>  
+        </p:column>  
+        <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.mConter']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.mcounter}" >
+<f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText> 
+        </p:column>  
+        <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.taxes']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.taxes}" >
+             <f:convertNumber maxFractionDigits="0"></f:convertNumber> </h:outputText>  
+        </p:column>  
+        <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['cash.panality']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.penaltyValue}" >
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText>  
+        </p:column>  
+        <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.fcfas']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.totalAmount}" > 
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText> 
+        </p:column>  
+         <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['rep.invoice.credit']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.credit}" > 
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText>
+                 </p:column>  
+        <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.income']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.income}" >  
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText>
+        </p:column>  
+        <p:column>  
+            <f:facet name="header">  
+                <h:outputText value="#{msg['inv.invoice.pendent']}" />  
+            </f:facet>  
+            <h:outputText value="#{invoice1.pendent}" >
+            <f:convertNumber maxFractionDigits="0"></f:convertNumber></h:outputText>  
+        </p:column>  
+       
+       
+    </p:dataTable>  
+
+  
+    </p:card>  
+ 	</b:column>
+ 	</b:row>
+ 	</b:container>
+    </h:form>  
+    </div>
+</ui:define>
+</ui:composition>
+
+</body>
+	
+</html>
